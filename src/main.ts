@@ -3,7 +3,7 @@ import * as Konva from 'konva';
 const flags = {
   showVelocities: true,
   showAccelerations: true,
-  tracePaths: false,
+  tracePaths: true,
 };
 
 type Vector = {
@@ -72,6 +72,15 @@ class Planet {
     this.position.y += this.velocity.y * dt;
   }
 
+  getKonvaPoop(): Konva.Shape {
+    return new Konva.Circle({
+      x: this.position.x,
+      y: this.position.y,
+      radius: 1,
+      fill: 'grey',
+    });
+  }
+
   getKonvaVelocityVector(): Konva.Shape {
     return new Konva.Arrow({
       x: this.position.x,
@@ -81,7 +90,7 @@ class Planet {
       pointerWidth : 6,
       fill: 'white',
       stroke: 'white',
-      strokeWidth: 4,
+      strokeWidth: 2,
     });
   }
 
@@ -94,7 +103,7 @@ class Planet {
       pointerWidth : 6,
       fill: 'blue',
       stroke: 'blue',
-      strokeWidth: 4,
+      strokeWidth: 2,
     });
   }
 
@@ -157,14 +166,22 @@ function main() {
   });
 
   const backgroundLayer = new Konva.Layer();
+  const mainLayer = new Konva.Layer();
+  const pathsLayer = new Konva.Layer();
+  const vectorsLayer = new Konva.Layer();
+
   backgroundLayer.add(new Konva.Rect({
     width: stage.getWidth(),
     height: stage.getHeight(),
     fill: 'black',
   }));
 
-  const mainLayer = new Konva.Layer();
-  const vectorsLayer = new Konva.Layer();
+  stage.add(backgroundLayer);
+  stage.add(pathsLayer);
+  stage.add(mainLayer);
+  stage.add(vectorsLayer);
+
+  backgroundLayer.draw();
 
   function update() {
     // Update the representation of the planet objects.
@@ -174,13 +191,19 @@ function main() {
     });
 
     // Clear the canvas
-    stage.removeChildren();
     mainLayer.removeChildren();
     vectorsLayer.removeChildren();
 
     planets.forEach(planet => mainLayer.add(planet.getKonvaGroup()));
 
     // Optional flags
+    if (flags.tracePaths) {
+      planets.forEach(planet => {
+        const poop = planet.getKonvaPoop();
+        pathsLayer.add(poop);
+        poop.draw();
+      });
+    }
     if (flags.showVelocities) {
       planets.forEach(planet => vectorsLayer.add(planet.getKonvaVelocityVector()));
     }
@@ -188,10 +211,9 @@ function main() {
       planets.forEach(planet => vectorsLayer.add(planet.getKonvaAccelerationVector()));
     }
 
-    // Add the layers to the stage
-    stage.add(backgroundLayer);
-    stage.add(mainLayer);
-    stage.add(vectorsLayer);
+    // Redraw
+    mainLayer.draw();
+    vectorsLayer.draw();
 
     requestAnimationFrame(update);
   }
