@@ -1,3 +1,11 @@
+import * as Konva from 'konva';
+
+const flags = {
+  showVelocities: true,
+  showAccelerations: true,
+  tracePaths: false,
+};
+
 type Vector = {
   x: number;
   y: number;
@@ -14,15 +22,12 @@ type PlanetSpecs = {
 };
 
 class Planet {
-  protected readonly context: CanvasRenderingContext2D;
-
   public readonly radius: number;
   public readonly mass: number;
   public position: Point;
   public velocity: Velocity;
 
-  constructor(context: CanvasRenderingContext2D, specs: PlanetSpecs) {
-    this.context = context;
+  constructor(specs: PlanetSpecs) {
     this.position = specs.position;
     this.radius = specs.radius;
     this.mass = specs.mass;
@@ -53,7 +58,7 @@ class Planet {
       y: netForce.y / this.mass,
     };
 
-    const dt = 0.05;
+    const dt = 0.1;
 
     this.velocity.x += netAcceleration.x * dt;
     this.velocity.y += netAcceleration.y * dt;
@@ -62,23 +67,38 @@ class Planet {
     this.position.y += this.velocity.y * dt;
   }
 
-  draw() {
-    this.context.beginPath();
-    this.context.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-    this.context.fillStyle = 'green';
-    this.context.fill();
+  drawVelocityVector() {
+  }
+
+  drawAccelerationVector() {
+  }
+
+  getGroup() {
+    if (flags.showVelocities) {
+      this.drawVelocityVector();
+    }
+
+    if (flags.showAccelerations) {
+      this.drawAccelerationVector();
+    }
+
+    const shape = new Konva.Circle({
+      fill: 'green',
+      radius: this.radius,
+      x: this.position.x,
+      y: this.position.y,
+    });
+
+    return shape;
   }
 }
 
 function main() {
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-  const context = canvas.getContext('2d');
-
-  const planet = new Planet(context, {
+  const planet = new Planet({
     radius: 10.0,
     mass: 1.0,
     position: {
-      x: 100.0,
+      x: 300.0,
       y: 300.0,
     },
     velocity: {
@@ -87,7 +107,7 @@ function main() {
     },
   });
 
-  const planet2 = new Planet(context, {
+  const planet2 = new Planet({
     radius: 20.0,
     mass: 10.0,
     position: {
@@ -100,7 +120,7 @@ function main() {
     },
   });
 
-  const planet3 = new Planet(context, {
+  const planet3 = new Planet({
     radius: 20.0,
     mass: 10.0,
     position: {
@@ -113,17 +133,36 @@ function main() {
     },
   });
 
-  function update() {
-    context.fillStyle = 'black';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  const stage = new Konva.Stage({
+    container: 'container',
+    width: 1000,
+    height: 600,
+  });
 
+  const backgroundLayer = new Konva.Layer();
+  backgroundLayer.add(new Konva.Rect({
+    width: 1000,
+    height: 600,
+    fill: 'black',
+  }));
+
+  const layer = new Konva.Layer();
+
+  function update() {
     planet.update([planet2, planet3]);
     planet2.update([planet, planet3]);
     planet3.update([planet, planet2]);
 
-    planet.draw();
-    planet2.draw();
-    planet3.draw();
+    stage.removeChildren();
+    layer.removeChildren();
+
+    stage.add(backgroundLayer);
+
+    layer.add(planet.getGroup());
+    layer.add(planet2.getGroup());
+    layer.add(planet3.getGroup());
+
+    stage.add(layer);
 
     requestAnimationFrame(update);
   }
