@@ -1,10 +1,70 @@
 import * as Konva from 'konva';
 
-const flags = {
-  showVelocities: true,
-  showAccelerations: true,
-  tracePaths: true,
+type VisualizationFlags = {
+  showVelocity: boolean;
+  showAcceleration: boolean;
+  showPath: boolean;
 };
+
+type PlanetConfig = {
+  radius: number,
+  mass: number,
+  position: Point,
+  velocity: Velocity,
+  flags: VisualizationFlags,
+};
+
+const defaultPlanetConfigs: PlanetConfig[] = [
+  {
+    radius: 10.0,
+    mass: 1.0,
+    position: {
+      x: 300.0,
+      y: 300.0,
+    },
+    velocity: {
+      x: -2.0,
+      y: -1.0,
+    },
+    flags: {
+      showVelocity: true,
+      showAcceleration: true,
+      showPath: true,
+    },
+  }, {
+    radius: 20.0,
+    mass: 10.0,
+    position: {
+      x: 400.0,
+      y: 300.0,
+    },
+    velocity: {
+      x: 0.0,
+      y: 20.0,
+    },
+    flags: {
+      showVelocity: true,
+      showAcceleration: true,
+      showPath: true,
+    },
+  }, {
+    radius: 20.0,
+    mass: 10.0,
+    position: {
+      x: 600.0,
+      y: 300.0,
+    },
+    velocity: {
+      x: 0.0,
+      y: -20.0,
+    },
+    flags: {
+      showVelocity: true,
+      showAcceleration: true,
+      showPath: true,
+    },
+  },
+];
 
 type Vector = {
   x: number;
@@ -28,13 +88,15 @@ class Planet {
   public position: Point;
   public velocity: Velocity;
   public acceleration: Acceleration;
+  public flags: VisualizationFlags;
 
-  constructor(specs: PlanetSpecs) {
-    this.position = specs.position;
-    this.radius = specs.radius;
-    this.mass = specs.mass;
-    this.velocity = specs.velocity;
+  constructor(config: PlanetConfig) {
+    this.position = config.position;
+    this.radius = config.radius;
+    this.mass = config.mass;
+    this.velocity = config.velocity;
     this.acceleration = { x: 0, y: 0 };
+    this.flags = config.flags;
   }
 
   // Updates this planet's position given the other planets' positions and masses.
@@ -120,45 +182,6 @@ class Planet {
 }
 
 function main() {
-  const planets = [
-    new Planet({
-      radius: 10.0,
-      mass: 1.0,
-      position: {
-        x: 300.0,
-        y: 300.0,
-      },
-      velocity: {
-        x: -2.0,
-        y: -1.0,
-      },
-    }),
-    new Planet({
-      radius: 20.0,
-      mass: 10.0,
-      position: {
-        x: 400.0,
-        y: 300.0,
-      },
-      velocity: {
-        x: 0.0,
-        y: 20.0,
-      },
-    }),
-    new Planet({
-      radius: 20.0,
-      mass: 10.0,
-      position: {
-        x: 600.0,
-        y: 300.0,
-      },
-      velocity: {
-        x: 0.0,
-        y: -20.0,
-      },
-    }),
-  ];
-
   const stage = new Konva.Stage({
     container: 'container',
     width: 1000,
@@ -183,6 +206,8 @@ function main() {
 
   backgroundLayer.draw();
 
+  const planets = defaultPlanetConfigs.map(config => new Planet(config));
+
   function update() {
     // Update the representation of the planet objects.
     planets.forEach(planet => {
@@ -197,19 +222,17 @@ function main() {
     planets.forEach(planet => mainLayer.add(planet.getKonvaGroup()));
 
     // Optional flags
-    if (flags.tracePaths) {
-      planets.forEach(planet => {
-        const poop = planet.getKonvaPoop();
-        pathsLayer.add(poop);
-        poop.draw();
-      });
-    }
-    if (flags.showVelocities) {
-      planets.forEach(planet => vectorsLayer.add(planet.getKonvaVelocityVector()));
-    }
-    if (flags.showAccelerations) {
-      planets.forEach(planet => vectorsLayer.add(planet.getKonvaAccelerationVector()));
-    }
+    planets.filter(planet => planet.flags.showPath).forEach(planet => {
+      const poop = planet.getKonvaPoop();
+      pathsLayer.add(poop);
+      poop.draw();
+    });
+    planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
+      vectorsLayer.add(planet.getKonvaVelocityVector());
+    });
+    planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
+      vectorsLayer.add(planet.getKonvaAccelerationVector());
+    });
 
     // Redraw
     mainLayer.draw();
