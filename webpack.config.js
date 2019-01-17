@@ -8,16 +8,16 @@ module.exports = {
     context: ROOT,
 
     entry: {
-        'main': './main.ts'
+        'main': './main.tsx'
     },
-    
+
     output: {
         filename: '[name].bundle.js',
         path: DESTINATION
     },
 
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.tsx'],
         modules: [
             ROOT,
             'node_modules'
@@ -45,14 +45,28 @@ module.exports = {
             * LOADERS
             *****************/
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 exclude: [ /node_modules/ ],
                 use: 'awesome-typescript-loader'
+            },
+
+            // Compile Scss
+            {
+                test: /\.scss$/,
+                use: [
+                    "style-loader", // creates style nodes from JS strings
+                    "css-loader", // translates CSS into CommonJS
+                    "sass-loader" // compiles Sass to CSS
+                ]
             }
         ]
+    },
+
+    externals: {
+      'react': 'React',
+      'react-dom': 'ReactDOM',
     },
 
     devtool: 'cheap-module-source-map',
     devServer: {}
 };
-

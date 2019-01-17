@@ -99,6 +99,10 @@ class Planet {
     this.flags = config.flags;
   }
 
+  setFlags(flags: VisualizationFlags) {
+    this.flags = flags;
+  }
+
   // Updates this planet's position given the other planets' positions and masses.
   update(planets: Planet[]) {
     const netForce: Vector = { x: 0, y: 0 };
@@ -183,9 +187,9 @@ class Planet {
 
 function main() {
   const stage = new Konva.Stage({
-    container: 'container',
+    container: 'canvas',
     width: 1000,
-    height: 600,
+    height: 700,
   });
 
   const backgroundLayer = new Konva.Layer();
@@ -245,3 +249,22 @@ function main() {
 }
 
 main();
+
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import './styles.scss';
+
+class SideBar extends React.Component {
+  render() {
+    return (
+      <div className="sidebar">
+        hello
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <SideBar/>,
+  document.getElementById("sidebar")
+);

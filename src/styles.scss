@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+#sidebar-container {
+  height: 700px;
+  width: 400px;
+  background-color: green;
+}
