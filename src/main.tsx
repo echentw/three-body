@@ -252,19 +252,10 @@ main();
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { SideBarComponent } from './SideBar';
 import './styles.scss';
 
-class SideBar extends React.Component {
-  render() {
-    return (
-      <div className="sidebar">
-        hello
-      </div>
-    );
-  }
-}
-
 ReactDOM.render(
-  <SideBar/>,
-  document.getElementById("sidebar")
+  <SideBarComponent/>,
+  document.getElementById("sidebar-container")
 );
