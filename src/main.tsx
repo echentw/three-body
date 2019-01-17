@@ -1,6 +1,6 @@
 import * as Konva from 'konva';
 
-type VisualizationFlags = {
+export type VisualizationFlags = {
   showVelocity: boolean;
   showAcceleration: boolean;
   showPath: boolean;
@@ -14,7 +14,7 @@ type PlanetConfig = {
   flags: VisualizationFlags,
 };
 
-const defaultPlanetConfigs: PlanetConfig[] = [
+const planetConfigs: PlanetConfig[] = [
   {
     radius: 10.0,
     mass: 1.0,
@@ -27,9 +27,9 @@ const defaultPlanetConfigs: PlanetConfig[] = [
       y: -1.0,
     },
     flags: {
-      showVelocity: true,
-      showAcceleration: true,
-      showPath: true,
+      showVelocity: false,
+      showAcceleration: false,
+      showPath: false,
     },
   }, {
     radius: 20.0,
@@ -43,9 +43,9 @@ const defaultPlanetConfigs: PlanetConfig[] = [
       y: 20.0,
     },
     flags: {
-      showVelocity: true,
-      showAcceleration: true,
-      showPath: true,
+      showVelocity: false,
+      showAcceleration: false,
+      showPath: false,
     },
   }, {
     radius: 20.0,
@@ -59,9 +59,9 @@ const defaultPlanetConfigs: PlanetConfig[] = [
       y: -20.0,
     },
     flags: {
-      showVelocity: true,
-      showAcceleration: true,
-      showPath: true,
+      showVelocity: false,
+      showAcceleration: false,
+      showPath: false,
     },
   },
 ];
@@ -185,18 +185,19 @@ class Planet {
   }
 }
 
-function main() {
-  const stage = new Konva.Stage({
-    container: 'canvas',
-    width: 1000,
-    height: 700,
-  });
+const planets = planetConfigs.map(config => new Planet(config));
 
-  const backgroundLayer = new Konva.Layer();
-  const mainLayer = new Konva.Layer();
-  const pathsLayer = new Konva.Layer();
-  const vectorsLayer = new Konva.Layer();
+const stage = new Konva.Stage({
+  container: 'canvas',
+  width: 1000,
+  height: 700,
+});
+const backgroundLayer = new Konva.Layer();
+const mainLayer = new Konva.Layer();
+const pathsLayer = new Konva.Layer();
+const vectorsLayer = new Konva.Layer();
 
+function initialize() {
   backgroundLayer.add(new Konva.Rect({
     width: stage.getWidth(),
     height: stage.getHeight(),
@@ -210,52 +211,76 @@ function main() {
 
   backgroundLayer.draw();
 
-  const planets = defaultPlanetConfigs.map(config => new Planet(config));
-
-  function update() {
-    // Update the representation of the planet objects.
-    planets.forEach(planet => {
-      const otherPlanets = planets.filter(otherPlanet => otherPlanet !== planet);
-      planet.update(otherPlanets);
-    });
-
-    // Clear the canvas
-    mainLayer.removeChildren();
-    vectorsLayer.removeChildren();
-
-    planets.forEach(planet => mainLayer.add(planet.getKonvaGroup()));
-
-    // Optional flags
-    planets.filter(planet => planet.flags.showPath).forEach(planet => {
-      const poop = planet.getKonvaPoop();
-      pathsLayer.add(poop);
-      poop.draw();
-    });
-    planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
-      vectorsLayer.add(planet.getKonvaVelocityVector());
-    });
-    planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
-      vectorsLayer.add(planet.getKonvaAccelerationVector());
-    });
-
-    // Redraw
-    mainLayer.draw();
-    vectorsLayer.draw();
-
-    requestAnimationFrame(update);
-  }
-
   update();
 }
 
-main();
+function update() {
+  // Update the representation of the planet objects.
+  planets.forEach(planet => {
+    const otherPlanets = planets.filter(otherPlanet => otherPlanet !== planet);
+    planet.update(otherPlanets);
+  });
+}
+
+function draw() {
+  // Clear the canvas
+  mainLayer.removeChildren();
+  vectorsLayer.removeChildren();
+
+  planets.forEach(planet => mainLayer.add(planet.getKonvaGroup()));
+
+  // Optional flags
+  planets.filter(planet => planet.flags.showPath).forEach(planet => {
+    const poop = planet.getKonvaPoop();
+    pathsLayer.add(poop);
+    poop.draw();
+  });
+  planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
+    vectorsLayer.add(planet.getKonvaVelocityVector());
+  });
+  planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
+    vectorsLayer.add(planet.getKonvaAccelerationVector());
+  });
+
+  // Redraw
+  mainLayer.draw();
+  vectorsLayer.draw();
+}
+
+function main() {
+  update();
+  draw();
+  requestAnimationFrame(main);
+}
+
+initialize();
+draw();
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { SideBarComponent } from './SideBar';
 import './styles.scss';
 
+class Controller extends React.Component {
+  updateFlags = (planetId: number, flags: VisualizationFlags) => {
+    planets[planetId].setFlags(flags);
+    draw();
+  }
+
+  start = () => {
+    main();
+  }
+
+  render() {
+    return (
+      <div className="controller">
+        <SideBarComponent updateFlags={this.updateFlags} start={this.start}/>
+      </div>
+    );
+  }
+}
+
 ReactDOM.render(
-  <SideBarComponent/>,
+  <Controller/>,
   document.getElementById("sidebar-container")
 );

@@ -1,37 +1,13 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
-type CheckBoxProps = {
-  onToggle: (checked: boolean) => void;
-};
+import { VisualizationFlags } from './main';
+import { CheckBox } from './CheckBox';
 
-class CheckBox extends React.Component<CheckBoxProps> {
-  state = {
-    checked: false,
-  }
-
-  toggle = () => {
-    const checked = !this.state.checked;
-    this.setState({ checked });
-    this.props.onToggle(checked);
-  }
-
-  render() {
-    return (
-      <div className="checkbox">
-        <label>
-          <input
-            type="checkbox"
-            checked={this.state.checked}
-            onChange={this.toggle}
-          />
-        </label>
-      </div>
-    );
-  }
+interface PlanetConfigComponentProps {
+  updateFlags: (flags: VisualizationFlags) => void;
 }
 
-class PlanetConfigComponent extends React.Component {
+class PlanetConfigComponent extends React.Component<PlanetConfigComponentProps> {
   state = {
     positionX: '100',
     positionY: '100',
@@ -42,7 +18,7 @@ class PlanetConfigComponent extends React.Component {
 
     showVelocity: false,
     showAcceleration: false,
-    tracePath: false,
+    showPath: false,
   }
 
   onChangePositionX = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,14 +47,29 @@ class PlanetConfigComponent extends React.Component {
 
   onChangeShowVelocity = (on: boolean) => {
     this.setState({ showVelocity: on });
+    this.props.updateFlags({
+      showVelocity: on,
+      showAcceleration: this.state.showAcceleration,
+      showPath: this.state.showPath,
+    });
   }
 
   onChangeShowAcceleration = (on: boolean) => {
     this.setState({ showAcceleration: on });
+    this.props.updateFlags({
+      showVelocity: this.state.showVelocity,
+      showAcceleration: on,
+      showPath: this.state.showPath,
+    });
   }
 
-  onChangeTracePath = (on: boolean) => {
-    this.setState({ tracePath: on });
+  onChangeShowPath = (on: boolean) => {
+    this.setState({ showPath: on });
+    this.props.updateFlags({
+      showVelocity: this.state.showVelocity,
+      showAcceleration: this.state.showAcceleration,
+      showPath: on,
+    });
   }
 
   render() {
@@ -103,10 +94,12 @@ class PlanetConfigComponent extends React.Component {
         <div className="scalar-container">
           <div className="text">Mass:</div>
           <input className="scalar-input" type="text" value={this.state.mass} onChange={this.onChangeMass}/>
+          kg
         </div>
         <div className="scalar-container">
           <div className="text">Radius:</div>
           <input className="scalar-input" type="text" value={this.state.mass} onChange={this.onChangeMass}/>
+          m
         </div>
 
         <div className="flag-toggle">
@@ -119,20 +112,28 @@ class PlanetConfigComponent extends React.Component {
         </div>
         <div className="flag-toggle">
           <div className="text">Trace Path</div>
-          <CheckBox onToggle={this.onChangeTracePath}/>
+          <CheckBox onToggle={this.onChangeShowPath}/>
         </div>
       </div>
     );
   }
 }
 
-export class SideBarComponent extends React.Component {
+interface SideBarComponentProps {
+  updateFlags: (planetId: number, flags: VisualizationFlags) => void;
+  start: () => void;
+}
+
+export class SideBarComponent extends React.Component<SideBarComponentProps> {
   render() {
     return (
       <div className="sidebar">
-        <PlanetConfigComponent/>
-        <PlanetConfigComponent/>
-        <PlanetConfigComponent/>
+        <PlanetConfigComponent updateFlags={(flags: VisualizationFlags) => this.props.updateFlags(0, flags)}/>
+        <PlanetConfigComponent updateFlags={(flags: VisualizationFlags) => this.props.updateFlags(1, flags)}/>
+        <PlanetConfigComponent updateFlags={(flags: VisualizationFlags) => this.props.updateFlags(2, flags)}/>
+        <button onClick={this.props.start}>
+          Activate Lasers
+        </button>
       </div>
     );
   }
