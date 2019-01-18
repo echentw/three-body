@@ -1,5 +1,12 @@
 import { Simulator } from './Simulator';
-import { Planet, PlanetConfig, Point, Velocity } from './Planet';
+import {
+  Planet,
+  PlanetConfig,
+  PlanetInitialConditions,
+  PlanetProperties,
+  Point,
+  Velocity,
+} from './Planet';
 
 export type VisualizationFlags = {
   showVelocity: boolean;
@@ -9,31 +16,19 @@ export type VisualizationFlags = {
 
 const planetConfigs: PlanetConfig[] = [
   {
-    radius: 10.0,
-    mass: 1.0,
-    position: {
-      x: 300.0,
-      y: 300.0,
+    initialConditions: {
+      position: {
+        x: 300.0,
+        y: 300.0,
+      },
+      velocity: {
+        x: -2.0,
+        y: -1.0,
+      },
     },
-    velocity: {
-      x: -2.0,
-      y: -1.0,
-    },
-    flags: {
-      showVelocity: false,
-      showAcceleration: false,
-      showPath: false,
-    },
-  }, {
-    radius: 20.0,
-    mass: 10.0,
-    position: {
-      x: 400.0,
-      y: 300.0,
-    },
-    velocity: {
-      x: 0.0,
-      y: 20.0,
+    properties: {
+      radius: 10.0,
+      mass: 1.0,
     },
     flags: {
       showVelocity: false,
@@ -41,15 +36,39 @@ const planetConfigs: PlanetConfig[] = [
       showPath: false,
     },
   }, {
-    radius: 20.0,
-    mass: 10.0,
-    position: {
-      x: 600.0,
-      y: 300.0,
+    initialConditions: {
+      position: {
+        x: 400.0,
+        y: 300.0,
+      },
+      velocity: {
+        x: 0.0,
+        y: 20.0,
+      },
     },
-    velocity: {
-      x: 0.0,
-      y: -20.0,
+    properties: {
+      radius: 20.0,
+      mass: 10.0,
+    },
+    flags: {
+      showVelocity: false,
+      showAcceleration: false,
+      showPath: false,
+    },
+  }, {
+    initialConditions: {
+      position: {
+        x: 600.0,
+        y: 300.0,
+      },
+      velocity: {
+        x: 0.0,
+        y: -20.0,
+      },
+    },
+    properties: {
+      radius: 20.0,
+      mass: 10.0,
     },
     flags: {
       showVelocity: false,
@@ -71,10 +90,13 @@ function update() {
   });
 }
 
+let STOPPED = false;
 function main() {
-  update();
-  simulator.draw();
-  requestAnimationFrame(main);
+  if (!STOPPED) {
+    update();
+    simulator.draw();
+    requestAnimationFrame(main);
+  }
 }
 
 import * as React from 'react';
@@ -88,14 +110,30 @@ class Controller extends React.Component {
     simulator.draw();
   }
 
+  updatePlanetConfigs = (viewConfigs: PlanetConfig[]) => {
+    const configs = JSON.parse(JSON.stringify(viewConfigs)) as PlanetConfig[];
+    STOPPED = true;
+    for (let i = 0; i < planets.length; ++i) {
+      planets[i].setInitialConditions(configs[i].initialConditions);
+      planets[i].setProperties(configs[i].properties);
+      planets[i].setFlags(configs[i].flags);
+    }
+    simulator.draw();
+  }
+
   start = () => {
+    STOPPED = false;
     main();
   }
 
   render() {
     return (
       <div className="controller">
-        <SideBarComponent updateFlags={this.updateFlags} start={this.start}/>
+        <SideBarComponent
+          updateFlags={this.updateFlags}
+          updatePlanetConfigs={this.updatePlanetConfigs}
+          start={this.start}
+        />
       </div>
     );
   }

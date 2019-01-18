@@ -10,29 +10,47 @@ export type Point = Vector;
 export type Velocity = Vector;
 export type Acceleration = Vector;
 
-export type PlanetConfig = {
+export type PlanetProperties = {
   radius: number,
   mass: number,
-  position: Point,
-  velocity: Velocity,
+}
+
+export type PlanetInitialConditions = {
+  position: Point;
+  velocity: Velocity;
+}
+
+export type PlanetConfig = {
+  properties: PlanetProperties,
+  initialConditions: PlanetInitialConditions,
   flags: VisualizationFlags,
 };
 
 export class Planet {
-  public readonly radius: number;
-  public readonly mass: number;
+  public radius: number;
+  public mass: number;
   public position: Point;
   public velocity: Velocity;
   public acceleration: Acceleration;
   public flags: VisualizationFlags;
 
   constructor(config: PlanetConfig) {
-    this.position = config.position;
-    this.radius = config.radius;
-    this.mass = config.mass;
-    this.velocity = config.velocity;
+    this.position = config.initialConditions.position;
+    this.velocity = config.initialConditions.velocity;
+    this.radius = config.properties.radius;
+    this.mass = config.properties.mass;
     this.acceleration = { x: 0, y: 0 };
     this.flags = config.flags;
+  }
+
+  setInitialConditions(conditions: PlanetInitialConditions) {
+    this.position = conditions.position;
+    this.velocity = conditions.velocity;
+  }
+
+  setProperties(properties: PlanetProperties) {
+    this.radius = properties.radius;
+    this.mass = properties.mass;
   }
 
   setFlags(flags: VisualizationFlags) {
