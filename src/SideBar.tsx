@@ -36,27 +36,27 @@ class PlanetConfigComponent extends React.Component<PlanetConfigComponentProps> 
         <div className="initial-vector">
           <div className="text">Initial Position:</div>
           (
-          <input className="vector-input" type="text" value={initialConditions.position.x} onChange={onChangePositionX}/>
+          <input className="vector-input" type="text" defaultValue={String(initialConditions.position.x)} onChange={onChangePositionX}/>
           ,
-          <input className="vector-input" type="text" value={initialConditions.position.y} onChange={onChangePositionY}/>
+          <input className="vector-input" type="text" defaultValue={String(initialConditions.position.y)} onChange={onChangePositionY}/>
           )
         </div>
         <div className="initial-vector">
           <div className="text">Initial Velocity:</div>
           (
-          <input className="vector-input" type="text" value={initialConditions.velocity.x} onChange={onChangeVelocityX}/>
+          <input className="vector-input" type="text" defaultValue={String(initialConditions.velocity.x)} onChange={onChangeVelocityX}/>
           ,
-          <input className="vector-input" type="text" value={initialConditions.velocity.y} onChange={onChangeVelocityY}/>
+          <input className="vector-input" type="text" defaultValue={String(initialConditions.velocity.y)} onChange={onChangeVelocityY}/>
           )
         </div>
         <div className="scalar-container">
           <div className="text">Mass:</div>
-          <input className="scalar-input" type="text" value={properties.mass} onChange={onChangeMass}/>
+          <input className="scalar-input" type="text" defaultValue={String(properties.mass)} onChange={onChangeMass}/>
           kg
         </div>
         <div className="scalar-container">
           <div className="text">Radius:</div>
-          <input className="scalar-input" type="text" value={properties.radius} onChange={onChangeRadius}/>
+          <input className="scalar-input" type="text" defaultValue={String(properties.radius)} onChange={onChangeRadius}/>
           m
         </div>
 
@@ -152,9 +152,14 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
     }],
   };
 
+  numberOrZero = (value: string): number => {
+    const maybeFloat = Number(value);
+    return isNaN(maybeFloat) ? 0.0 : maybeFloat;
+  }
+
   onChangePositionX = (planetId: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const configs = this.state.configs;
-    configs[planetId].initialConditions.position.x = Number(event.target.value);
+    configs[planetId].initialConditions.position.x = this.numberOrZero(event.target.value);
     this.setState({ configs });
 
     this.props.updatePlanetConfigs(configs);
@@ -162,7 +167,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
 
   onChangePositionY = (planetId: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const configs = this.state.configs;
-    configs[planetId].initialConditions.position.y = Number(event.target.value);
+    configs[planetId].initialConditions.position.y = this.numberOrZero(event.target.value);
     this.setState({ configs });
 
     this.props.updatePlanetConfigs(configs);
@@ -170,7 +175,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
 
   onChangeVelocityX = (planetId: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const configs = this.state.configs;
-    configs[planetId].initialConditions.velocity.x = Number(event.target.value);
+    configs[planetId].initialConditions.velocity.x = this.numberOrZero(event.target.value);
     this.setState({ configs });
 
     this.props.updatePlanetConfigs(configs);
@@ -178,7 +183,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
 
   onChangeVelocityY = (planetId: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const configs = this.state.configs;
-    configs[planetId].initialConditions.velocity.y = Number(event.target.value);
+    configs[planetId].initialConditions.velocity.y = this.numberOrZero(event.target.value);
     this.setState({ configs });
 
     this.props.updatePlanetConfigs(configs);
@@ -186,7 +191,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
 
   onChangeMass = (planetId: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const configs = this.state.configs;
-    configs[planetId].properties.mass = Number(event.target.value);
+    configs[planetId].properties.mass = this.numberOrZero(event.target.value);
     this.setState({ configs });
 
     this.props.updatePlanetConfigs(configs);
@@ -194,7 +199,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
 
   onChangeRadius = (planetId: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const configs = this.state.configs;
-    configs[planetId].properties.radius = Number(event.target.value);
+    configs[planetId].properties.radius = this.numberOrZero(event.target.value);
     this.setState({ configs });
 
     this.props.updatePlanetConfigs(configs);
