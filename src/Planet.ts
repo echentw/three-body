@@ -92,17 +92,20 @@ export class Planet {
     this.position.y += this.velocity.y * dt;
   }
 
-  getKonvaPoop(): Konva.Shape {
-    return new Konva.Circle({
+  getKonvaPoop(): Konva.Group {
+    const group = new Konva.Group();
+    group.add(new Konva.Circle({
       x: this.position.x,
       y: this.position.y,
       radius: 1,
       fill: 'grey',
-    });
+    }));
+    return group;
   }
 
-  getKonvaVelocityVector(): Konva.Shape {
-    return new Konva.Arrow({
+  getKonvaVelocityVector(): Konva.Group {
+    const group = new Konva.Group();
+    group.add(new Konva.Arrow({
       x: this.position.x,
       y: this.position.y,
       points: [0, 0, this.velocity.x * 2, this.velocity.y * 2],
@@ -111,11 +114,13 @@ export class Planet {
       fill: 'white',
       stroke: 'white',
       strokeWidth: 2,
-    });
+    }));
+    return group;
   }
 
-  getKonvaAccelerationVector(): Konva.Shape {
-    return new Konva.Arrow({
+  getKonvaAccelerationVector(): Konva.Group {
+    const group = new Konva.Group();
+    group.add(new Konva.Arrow({
       x: this.position.x,
       y: this.position.y,
       points: [0, 0, this.acceleration.x * 4, this.acceleration.y * 4],
@@ -124,7 +129,8 @@ export class Planet {
       fill: 'blue',
       stroke: 'blue',
       strokeWidth: 2,
-    });
+    }));
+    return group;
   }
 
   getKonvaGroup(): Konva.Group {

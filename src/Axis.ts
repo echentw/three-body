@@ -84,7 +84,7 @@ export class Axis {
         stroke: 'grey',
       }),
       new Konva.Text({
-        text: String(this.height * 0.75 - this.origin.y),
+        text: String(-(this.height * 0.75 - this.origin.y)),
         fill: 'grey',
         align: 'center',
         verticalAlign: 'center',
@@ -102,7 +102,7 @@ export class Axis {
         stroke: 'grey',
       }),
       new Konva.Text({
-        text: String(this.height * 0.25 - this.origin.y),
+        text: String(-(this.height * 0.25 - this.origin.y)),
         fill: 'grey',
         align: 'center',
         verticalAlign: 'center',

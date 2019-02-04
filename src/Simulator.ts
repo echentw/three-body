@@ -78,14 +78,16 @@ export class Simulator {
       const group = planet.getKonvaGroup();
       group.x(this.stage.getWidth() / 2);
       group.y(this.stage.getHeight() / 2);
+      group.scaleY(-1);
       this.mainLayer.add(group);
     });
 
     // Trace paths
     this.planets.filter(planet => planet.flags.showPath).forEach(planet => {
       const poop = planet.getKonvaPoop();
-      poop.offsetX(-this.stage.getWidth() / 2);
-      poop.offsetY(-this.stage.getHeight() / 2);
+      poop.x(this.stage.getWidth() / 2);
+      poop.y(this.stage.getHeight() / 2);
+      poop.scaleY(-1);
       this.pathsLayer.add(poop);
       poop.draw();
     });
@@ -93,16 +95,18 @@ export class Simulator {
     // Velocity vectors
     this.planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
       const vector = planet.getKonvaVelocityVector();
-      vector.offsetX(-this.stage.getWidth() / 2);
-      vector.offsetY(-this.stage.getHeight() / 2);
+      vector.x(this.stage.getWidth() / 2);
+      vector.y(this.stage.getHeight() / 2);
+      vector.scaleY(-1);
       this.vectorsLayer.add(vector);
     });
 
     // Acceleration Vectors
     this.planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
       const vector = planet.getKonvaAccelerationVector();
-      vector.offsetX(-this.stage.getWidth() / 2);
-      vector.offsetY(-this.stage.getHeight() / 2);
+      vector.x(this.stage.getWidth() / 2);
+      vector.y(this.stage.getHeight() / 2);
+      vector.scaleY(-1);
       this.vectorsLayer.add(vector);
     });
 
