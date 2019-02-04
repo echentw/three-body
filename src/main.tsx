@@ -121,6 +121,10 @@ class Controller extends React.Component {
     simulator.draw();
   }
 
+  toggleAxis = (on: boolean) => {
+    simulator.toggleAxis(on);
+  }
+
   start = () => {
     STOPPED = false;
     main();
@@ -132,6 +136,7 @@ class Controller extends React.Component {
         <SideBarComponent
           updateFlags={this.updateFlags}
           updatePlanetConfigs={this.updatePlanetConfigs}
+          toggleAxis={this.toggleAxis}
           start={this.start}
         />
       </div>

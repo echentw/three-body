@@ -80,6 +80,7 @@ class PlanetConfigComponent extends React.Component<PlanetConfigComponentProps> 
 interface SideBarComponentProps {
   updateFlags: (planetId: number, flags: VisualizationFlags) => void;
   updatePlanetConfigs: (configs: PlanetConfig[]) => void;
+  toggleAxis: (on: boolean) => void;
   start: () => void;
 }
 
@@ -271,6 +272,10 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
         <button onClick={this.props.start}>
           Activate Lasers
         </button>
+        <div className="flag-toggle">
+          <div className="text">Show Axis</div>
+          <CheckBox onToggle={this.props.toggleAxis}/>
+        </div>
       </div>
     );
   }
