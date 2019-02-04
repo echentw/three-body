@@ -1,12 +1,15 @@
 import * as Konva from 'konva';
+import { Point } from './Planet';
 
 export class Axis {
   public width: number;
   public height: number;
+  public origin: Point;
 
-  constructor(width: number, height: number) {
+  constructor({ width, height }: { width: number, height: number }, origin: Point) {
     this.width = width;
     this.height = height;
+    this.origin = origin;
   }
 
   getKonvaGroup(): Konva.Group {
@@ -43,7 +46,7 @@ export class Axis {
         stroke: 'grey',
       }),
       new Konva.Text({
-        text: String(this.width * 0.75),
+        text: String(this.width * 0.75 - this.origin.x),
         fill: 'grey',
         align: 'center',
         width: 50,
@@ -60,7 +63,7 @@ export class Axis {
         stroke: 'grey',
       }),
       new Konva.Text({
-        text: String(this.width * 0.25),
+        text: String(this.width * 0.25 - this.origin.x),
         fill: 'grey',
         align: 'center',
         width: 50,
@@ -81,7 +84,7 @@ export class Axis {
         stroke: 'grey',
       }),
       new Konva.Text({
-        text: String(this.height * 0.75),
+        text: String(this.height * 0.75 - this.origin.y),
         fill: 'grey',
         align: 'center',
         verticalAlign: 'center',
@@ -99,7 +102,7 @@ export class Axis {
         stroke: 'grey',
       }),
       new Konva.Text({
-        text: String(this.height * 0.25),
+        text: String(this.height * 0.25 - this.origin.y),
         fill: 'grey',
         align: 'center',
         verticalAlign: 'center',
@@ -108,6 +111,78 @@ export class Axis {
         x: this.width / 2,
         y: this.height * 0.25 - 5,
       }),
+    );
+
+    // more x-axis guide marks
+    group.add(
+      new Konva.Line({
+        points: [
+          this.width * 0.125, this.height / 2 - 6,
+          this.width * 0.125, this.height / 2 + 6,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      }),
+      new Konva.Line({
+        points: [
+          this.width * 0.375, this.height / 2 - 6,
+          this.width * 0.375, this.height / 2 + 6,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      }),
+      new Konva.Line({
+        points: [
+          this.width * 0.875, this.height / 2 - 6,
+          this.width * 0.875, this.height / 2 + 6,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      }),
+      new Konva.Line({
+        points: [
+          this.width * 0.625, this.height / 2 - 6,
+          this.width * 0.625, this.height / 2 + 6,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      })
+    );
+
+    // more y-axis guide marks
+    group.add(
+      new Konva.Line({
+        points: [
+          this.width / 2 + 6, this.height * 0.125,
+          this.width / 2 - 6, this.height * 0.125,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      }),
+      new Konva.Line({
+        points: [
+          this.width / 2 + 6, this.height * 0.375,
+          this.width / 2 - 6, this.height * 0.375,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      }),
+      new Konva.Line({
+        points: [
+          this.width / 2 + 6, this.height * 0.625,
+          this.width / 2 - 6, this.height * 0.625,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      }),
+      new Konva.Line({
+        points: [
+          this.width / 2 + 6, this.height * 0.875,
+          this.width / 2 - 6, this.height * 0.875,
+        ],
+        strokeWidth: 2,
+        stroke: 'grey',
+      })
     );
 
     return group;

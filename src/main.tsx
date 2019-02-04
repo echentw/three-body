@@ -18,8 +18,8 @@ const planetConfigs: PlanetConfig[] = [
   {
     initialConditions: {
       position: {
-        x: 300.0,
-        y: 300.0,
+        x: -200.0,
+        y: 0.0,
       },
       velocity: {
         x: -2.0,
@@ -38,8 +38,8 @@ const planetConfigs: PlanetConfig[] = [
   }, {
     initialConditions: {
       position: {
-        x: 400.0,
-        y: 300.0,
+        x: -100.0,
+        y: -50.0,
       },
       velocity: {
         x: 0.0,
@@ -58,8 +58,8 @@ const planetConfigs: PlanetConfig[] = [
   }, {
     initialConditions: {
       position: {
-        x: 600.0,
-        y: 300.0,
+        x: 100.0,
+        y: 0.0,
       },
       velocity: {
         x: 0.0,

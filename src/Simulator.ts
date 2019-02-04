@@ -20,7 +20,10 @@ export class Simulator {
       width: 1000,
       height: 700,
     });
-    this.axis = new Axis(this.stage.getWidth(), this.stage.getHeight());
+    this.axis = new Axis(
+      { width: this.stage.getWidth(), height: this.stage.getHeight() },
+      { x: this.stage.getWidth() / 2, y: this.stage.getHeight() / 2 },
+    );
 
     this.backgroundLayer = new Konva.Layer();
     this.axisLayer = new Konva.Layer();
@@ -71,19 +74,36 @@ export class Simulator {
     this.mainLayer.removeChildren();
     this.vectorsLayer.removeChildren();
 
-    this.planets.forEach(planet => this.mainLayer.add(planet.getKonvaGroup()));
+    this.planets.forEach(planet => {
+      const group = planet.getKonvaGroup();
+      group.x(this.stage.getWidth() / 2);
+      group.y(this.stage.getHeight() / 2);
+      this.mainLayer.add(group);
+    });
 
-    // Optional flags
+    // Trace paths
     this.planets.filter(planet => planet.flags.showPath).forEach(planet => {
       const poop = planet.getKonvaPoop();
+      poop.offsetX(-this.stage.getWidth() / 2);
+      poop.offsetY(-this.stage.getHeight() / 2);
       this.pathsLayer.add(poop);
       poop.draw();
     });
+
+    // Velocity vectors
     this.planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
-      this.vectorsLayer.add(planet.getKonvaVelocityVector());
+      const vector = planet.getKonvaVelocityVector();
+      vector.offsetX(-this.stage.getWidth() / 2);
+      vector.offsetY(-this.stage.getHeight() / 2);
+      this.vectorsLayer.add(vector);
     });
+
+    // Acceleration Vectors
     this.planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
-      this.vectorsLayer.add(planet.getKonvaAccelerationVector());
+      const vector = planet.getKonvaAccelerationVector();
+      vector.offsetX(-this.stage.getWidth() / 2);
+      vector.offsetY(-this.stage.getHeight() / 2);
+      this.vectorsLayer.add(vector);
     });
 
     // Redraw
