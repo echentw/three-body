@@ -3,6 +3,7 @@ import * as React from 'react';
 import { VisualizationFlags } from './main';
 import { CheckBox } from './CheckBox';
 import { PlanetConfig, PlanetProperties, PlanetInitialConditions } from './Planet';
+import { planetConfigs } from './initialConfig';
 
 interface PlanetConfigComponentProps {
   config: PlanetConfig,
@@ -90,67 +91,7 @@ interface SideBarComponentState {
 
 export class SideBarComponent extends React.Component<SideBarComponentProps, SideBarComponentState> {
   state = {
-    configs: [{
-      initialConditions: {
-        position: {
-          x: -200.0,
-          y: 0.0,
-        },
-        velocity: {
-          x: -2.0,
-          y: -1.0,
-        },
-      },
-      properties: {
-        radius: 10.0,
-        mass: 1.0,
-      },
-      flags: {
-        showVelocity: false,
-        showAcceleration: false,
-        showPath: false,
-      },
-    }, {
-      initialConditions: {
-        position: {
-          x: -100.0,
-          y: -50.0,
-        },
-        velocity: {
-          x: 0.0,
-          y: 20.0,
-        },
-      },
-      properties: {
-        radius: 20.0,
-        mass: 10.0,
-      },
-      flags: {
-        showVelocity: false,
-        showAcceleration: false,
-        showPath: false,
-      },
-    }, {
-      initialConditions: {
-        position: {
-          x: 100.0,
-          y: 0.0,
-        },
-        velocity: {
-          x: 0.0,
-          y: -20.0,
-        },
-      },
-      properties: {
-        radius: 20.0,
-        mass: 10.0,
-      },
-      flags: {
-        showVelocity: false,
-        showAcceleration: false,
-        showPath: false,
-      },
-    }],
+    configs: planetConfigs,
   };
 
   numberOrZero = (value: string): number => {
