@@ -57,8 +57,7 @@ export class Planet {
     this.flags = flags;
   }
 
-  // Updates this planet's position given the other planets' positions and masses.
-  update(planets: Planet[]) {
+  updateAcceleration(planets: Planet[]) {
     const netForce: Vector = { x: 0, y: 0 };
 
     planets.forEach(planet => {
@@ -76,17 +75,20 @@ export class Planet {
       netForce.y += force * direction.y;
     });
 
-    const netAcceleration: Acceleration = {
+    this.acceleration = {
       x: netForce.x / this.mass,
       y: netForce.y / this.mass,
     };
+  }
 
+  // Updates this planet's position given the other planets' positions and masses.
+  update(planets: Planet[]) {
     const dt = 0.1;
 
-    this.acceleration = netAcceleration;
+    this.updateAcceleration(planets);
 
-    this.velocity.x += netAcceleration.x * dt;
-    this.velocity.y += netAcceleration.y * dt;
+    this.velocity.x += this.acceleration.x * dt;
+    this.velocity.y += this.acceleration.y * dt;
 
     this.position.x += this.velocity.x * dt;
     this.position.y += this.velocity.y * dt;

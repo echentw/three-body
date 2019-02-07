@@ -15,7 +15,16 @@ export type VisualizationFlags = {
   showPath: boolean;
 };
 
-const planets = planetConfigs.map(config => new Planet(config));
+const getPlanets = (): Planet[] => {
+  const planets = planetConfigs.map(config => new Planet(config));
+  planets.forEach(planet => {
+    const others = planets.filter(other => other !== planet);
+    planet.updateAcceleration(others);
+  });
+  return planets;
+}
+
+const planets = getPlanets();
 const simulator = new Simulator(planets);
 simulator.draw();
 
