@@ -54,6 +54,7 @@ export class Simulator {
     this.pathsLayer.removeChildren();
     this.pathsLayer.draw();
   }
+
   toggleAxis(on: boolean) {
     if (on) {
       this.backgroundLayer.remove();

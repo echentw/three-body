@@ -50,9 +50,9 @@ class Controller extends React.Component<{}, ComponentState> {
   }
 
   mainLoop = () => {
-    this.updatePlanetStates();
-    simulator.draw();
     if (this.state.playing) {
+      this.updatePlanetStates();
+      simulator.draw();
       requestAnimationFrame(this.mainLoop);
     }
   }
