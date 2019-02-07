@@ -38,7 +38,7 @@ function main() {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { SideBarComponent } from './SideBar';
+import { SideBarComponent } from './components/SideBar';
 import './styles.scss';
 
 class Controller extends React.Component {
