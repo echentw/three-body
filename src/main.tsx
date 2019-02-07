@@ -15,19 +15,23 @@ export type VisualizationFlags = {
   showPath: boolean;
 };
 
-const getPlanets = (): Planet[] => {
-  const planets = planetConfigs.map(config => new Planet(config));
+let planets: Planet[];
+const simulator = new Simulator();
+
+const initializeWorld = () => {
+  const configsCopy = JSON.parse(JSON.stringify(planetConfigs)) as PlanetConfig[];
+  planets = configsCopy.map(config => new Planet(config));
   planets.forEach(planet => {
     const others = planets.filter(other => other !== planet);
     planet.updateAcceleration(others);
   });
-  return planets;
-}
 
-const planets = getPlanets();
-const simulator = new Simulator(planets);
-simulator.draw();
+  simulator.attachPlanets(planets);
+  simulator.clearPaths();
+  simulator.draw();
+};
 
+initializeWorld();
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -90,6 +94,12 @@ class Controller extends React.Component<{}, ComponentState> {
     });
   }
 
+  resetPositions = () => {
+    this.setState({ playing: false }, () => {
+      initializeWorld();
+    });
+  }
+
   render() {
     return (
       <div className="controller">
@@ -98,6 +108,7 @@ class Controller extends React.Component<{}, ComponentState> {
           updatePlanetConfigs={this.updatePlanetConfigs}
           toggleAxis={this.toggleAxis}
           togglePlayPause={this.togglePlayPause}
+          resetPositions={this.resetPositions}
           playing={this.state.playing}
           showAxis={this.state.showAxis}
         />

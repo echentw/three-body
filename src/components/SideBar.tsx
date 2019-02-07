@@ -11,6 +11,7 @@ interface SideBarComponentProps {
   updatePlanetConfigs: (configs: PlanetConfig[]) => void;
   toggleAxis: (showAxis: boolean) => void;
   togglePlayPause: (playing: boolean) => void;
+  resetPositions: () => void;
 
   playing: boolean;
   showAxis: boolean;
@@ -144,6 +145,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
         <GlobalConfigComponent
           togglePlayPause={this.props.togglePlayPause}
           toggleAxis={this.props.toggleAxis}
+          resetPositions={this.props.resetPositions}
           showAxis={this.props.showAxis}
           playing={this.props.playing}
         />

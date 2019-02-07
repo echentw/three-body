@@ -13,8 +13,7 @@ export class Simulator {
   private mainLayer: Konva.Layer;
   private vectorsLayer: Konva.Layer;
 
-  constructor(planets: Planet[]) {
-    this.planets = planets;
+  constructor() {
     this.stage = new Konva.Stage({
       container: 'canvas',
       width: 1000,
@@ -47,6 +46,14 @@ export class Simulator {
     this.backgroundLayer.draw();
   }
 
+  attachPlanets(planets: Planet[]) {
+    this.planets = planets;
+  }
+
+  clearPaths() {
+    this.pathsLayer.removeChildren();
+    this.pathsLayer.draw();
+  }
   toggleAxis(on: boolean) {
     if (on) {
       this.backgroundLayer.remove();

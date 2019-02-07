@@ -3,6 +3,11 @@
   flex-direction: row;
 }
 
+.flag-toggle {
+  display: flex;
+  flex-direction: row;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -35,11 +40,6 @@
         width: 90px;
       }
     }
-
-    .flag-toggle {
-      display: flex;
-      flex-direction: row;
-    }
   }
 
   .global-config-container {
@@ -47,9 +47,14 @@
     width: 350px;
     background-color: pink;
 
-    .flag-toggle {
+    .buttons-container {
       display: flex;
       flex-direction: row;
+
+      button {
+        margin: 10px;
+        width: 100px;
+      }
     }
   }
 }
