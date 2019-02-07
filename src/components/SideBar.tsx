@@ -1,16 +1,19 @@
 import * as React from 'react';
 
 import { VisualizationFlags } from '../main';
-import { CheckBox } from './CheckBox';
 import { PlanetConfig } from '../Planet';
 import { planetConfigs } from '../initialConfig';
 import { PlanetConfigComponent } from './PlanetConfigComponent';
+import { GlobalConfigComponent } from './GlobalConfigComponent';
 
 interface SideBarComponentProps {
   updateFlags: (planetId: number, flags: VisualizationFlags) => void;
   updatePlanetConfigs: (configs: PlanetConfig[]) => void;
-  toggleAxis: (on: boolean) => void;
-  start: () => void;
+  toggleAxis: (showAxis: boolean) => void;
+  togglePlayPause: (playing: boolean) => void;
+
+  playing: boolean;
+  showAxis: boolean;
 }
 
 interface SideBarComponentState {
@@ -138,13 +141,12 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
           onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(2, on)}
           onChangeShowPath={(on: boolean) => this.onChangeShowPath(2, on)}
         />
-        <button onClick={this.props.start}>
-          Activate Lasers
-        </button>
-        <div className="flag-toggle">
-          <div className="text">Show Axis</div>
-          <CheckBox onToggle={this.props.toggleAxis}/>
-        </div>
+        <GlobalConfigComponent
+          togglePlayPause={this.props.togglePlayPause}
+          toggleAxis={this.props.toggleAxis}
+          showAxis={this.props.showAxis}
+          playing={this.props.playing}
+        />
       </div>
     );
   }

@@ -3,7 +3,7 @@
   flex-direction: row;
 }
 
-#sidebar-container {
+.sidebar {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -14,7 +14,7 @@
   background-color: green;
 
   .planet-config-component {
-    height: 200px;
+    height: 160px;
     width: 350px;
     background-color: pink;
 
@@ -42,8 +42,14 @@
     }
   }
 
-  .flag-toggle {
-    display: flex;
-    flex-direction: row;
+  .global-config-container {
+    height: 100px;
+    width: 350px;
+    background-color: pink;
+
+    .flag-toggle {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
