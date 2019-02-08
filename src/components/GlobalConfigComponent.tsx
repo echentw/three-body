@@ -5,12 +5,12 @@ import { CheckBox } from './CheckBox';
 interface ComponentProps {
   togglePlayPause: (play: boolean) => void;
   toggleAxis: (on: boolean) => void;
-  toggleMomentumNormalization: (normalized: boolean) => void;
+  toggleNormalization: (normalized: boolean) => void;
   resetPositions: () => void;
 
   showAxis: boolean;
   playing: boolean;
-  momentumNormalized: boolean;
+  normalized: boolean;
 }
 
 export class GlobalConfigComponent extends React.Component<ComponentProps> {
@@ -29,13 +29,13 @@ export class GlobalConfigComponent extends React.Component<ComponentProps> {
             Reset Positions
           </button>
         </div>
-        <div className="system-momentum">
-          <button onClick={() => this.props.toggleMomentumNormalization(!this.props.momentumNormalized)}>
-            { this.props.momentumNormalized ? 'Momentum normalized!' : 'Normalize momentum' }
+        <div className="normalize-container">
+          <button
+            onClick={() => this.props.toggleNormalization(true)}
+            disabled={this.props.normalized}
+          >
+            { this.props.normalized ? 'Normalized!' : 'Normalize Momentum and Barycenter' }
           </button>
-        </div>
-        <div className="system-barycenter">
-          System Barycenter
         </div>
       </div>
     );

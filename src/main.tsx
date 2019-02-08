@@ -34,14 +34,14 @@ import './styles.scss';
 interface ComponentState {
   playing: boolean;
   showAxis: boolean;
-  momentumNormalized: boolean;
+  normalized: boolean;
 }
 
 class Controller extends React.Component<{}, ComponentState> {
   state = {
     playing: false,
     showAxis: true,
-    momentumNormalized: false,
+    normalized: false,
   }
 
   mainLoop = () => {
@@ -62,7 +62,7 @@ class Controller extends React.Component<{}, ComponentState> {
   }
 
   updatePlanetConfigs = (viewConfigs: PlanetConfig[]) => {
-    this.setState({ playing: false, momentumNormalized: false }, () => {
+    this.setState({ playing: false, normalized: false }, () => {
       initializeWorld(viewConfigs);
     });
   }
@@ -80,16 +80,17 @@ class Controller extends React.Component<{}, ComponentState> {
     });
   }
 
-  toggleMomentumNormalization = (normalized: boolean) => {
-    this.setState({ momentumNormalized: normalized }, () => {
-      if (this.state.momentumNormalized) {
-        system.normalizeMomentum();
+  toggleNormalization = (normalized: boolean) => {
+    this.setState({ normalized }, () => {
+      if (this.state.normalized) {
+        system.normalize();
+        simulator.draw();
       }
     });
   }
 
   resetPositions = () => {
-    this.setState({ playing: false, momentumNormalized: false }, () => {
+    this.setState({ playing: false, normalized: false }, () => {
       initializeWorld(planetConfigs);
     });
   }
@@ -102,11 +103,11 @@ class Controller extends React.Component<{}, ComponentState> {
           updatePlanetConfigs={this.updatePlanetConfigs}
           toggleAxis={this.toggleAxis}
           togglePlayPause={this.togglePlayPause}
-          toggleMomentumNormalization={this.toggleMomentumNormalization}
+          toggleNormalization={this.toggleNormalization}
           resetPositions={this.resetPositions}
           playing={this.state.playing}
           showAxis={this.state.showAxis}
-          momentumNormalized={this.state.momentumNormalized}
+          normalized={this.state.normalized}
         />
       </div>
     );

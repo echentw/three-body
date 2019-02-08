@@ -2,12 +2,15 @@ import {
   Planet,
   PlanetConfig,
 } from './Planet';
-import { Vector } from './Physics';
+import {
+  Point,
+  Vector,
+} from './Physics';
 import { VisualizationFlags } from './main';
 
 export class ThreeBodySystem {
   private planets: Planet[];
-  private momentumNormalized: boolean;
+  private normalized: boolean;
 
   constructor(configs: PlanetConfig[]) {
     this.reset(configs);
@@ -21,7 +24,7 @@ export class ThreeBodySystem {
       planet.updateAcceleration(others);
     });
 
-    this.momentumNormalized = false;
+    this.normalized = false;
   }
 
   step(): void {
@@ -30,8 +33,8 @@ export class ThreeBodySystem {
       planet.update(otherPlanets);
     });
 
-    if (this.momentumNormalized) {
-      this.normalizeMomentum();
+    if (this.normalized) {
+      this.normalize();
     }
   }
 
@@ -39,7 +42,28 @@ export class ThreeBodySystem {
     this.planets[planetId].setFlags(flags);
   }
 
-  normalizeMomentum(): void {
+  normalize(): void {
+    this.normalizeMomentum();
+    this.normalizeBarycenter();
+
+    this.normalized = true;
+  }
+
+  private getBarycenter(): Point {
+    const weightedSystemMass = this.planets.reduce((center: Point, planet: Planet) => ({
+      x: center.x + (planet.mass * planet.position.x),
+      y: center.y + (planet.mass * planet.position.y),
+    }), { x: 0, y: 0 });
+
+    const systemMass = this.planets.reduce((mass: number, planet: Planet) => mass + planet.mass, 0);
+
+    return {
+      x: weightedSystemMass.x / systemMass,
+      y: weightedSystemMass.y / systemMass,
+    };
+  }
+
+  private getMomentum(): Vector {
     const systemMomentum = this.planets.reduce((momentum: Vector, planet: Planet) => ({
       x: momentum.x + (planet.mass * planet.velocity.x),
       y: momentum.y + (planet.mass * planet.velocity.y),
@@ -47,17 +71,26 @@ export class ThreeBodySystem {
 
     const systemMass = this.planets.reduce((mass: number, planet: Planet) => mass + planet.mass, 0);
 
-    const adjustment: Vector = {
-      x: -systemMomentum.x / systemMass,
-      y: -systemMomentum.y / systemMass,
+    return {
+      x: systemMomentum.x / systemMass,
+      y: systemMomentum.y / systemMass,
     };
+  }
 
+  private normalizeBarycenter(): void {
+    const barycenter = this.getBarycenter();
     this.planets.forEach(planet => {
-      planet.velocity.x += adjustment.x;
-      planet.velocity.y += adjustment.y;
+      planet.position.x -= barycenter.x;
+      planet.position.y -= barycenter.y;
     });
+  }
 
-    this.momentumNormalized = true;
+  private normalizeMomentum(): void {
+    const momentum = this.getMomentum();
+    this.planets.forEach(planet => {
+      planet.velocity.x -= momentum.x;
+      planet.velocity.y -= momentum.y;
+    });
   }
 
   getPlanets(): Planet[] {
