@@ -1,14 +1,11 @@
 import * as Konva from 'konva';
 import { VisualizationFlags } from './main';
-
-export type Vector = {
-  x: number;
-  y: number;
-};
-
-export type Point = Vector;
-export type Velocity = Vector;
-export type Acceleration = Vector;
+import {
+  Vector,
+  Point,
+  Velocity,
+  Acceleration,
+} from './Physics';
 
 export type PlanetProperties = {
   radius: number,
@@ -41,16 +38,6 @@ export class Planet {
     this.mass = config.properties.mass;
     this.acceleration = { x: 0, y: 0 };
     this.flags = config.flags;
-  }
-
-  setInitialConditions(conditions: PlanetInitialConditions) {
-    this.position = conditions.position;
-    this.velocity = conditions.velocity;
-  }
-
-  setProperties(properties: PlanetProperties) {
-    this.radius = properties.radius;
-    this.mass = properties.mass;
   }
 
   setFlags(flags: VisualizationFlags) {

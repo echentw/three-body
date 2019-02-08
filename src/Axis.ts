@@ -1,5 +1,5 @@
 import * as Konva from 'konva';
-import { Point } from './Planet';
+import { Point } from './Physics';
 
 export class Axis {
   public width: number;

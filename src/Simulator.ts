@@ -1,9 +1,10 @@
 import * as Konva from 'konva';
 import { Planet } from './Planet';
+import { ThreeBodySystem } from './ThreeBodySystem';
 import { Axis } from './Axis';
 
 export class Simulator {
-  private planets: Planet[];
+  private threeBodySystem: ThreeBodySystem;
   private axis: Axis;
 
   private stage: Konva.Stage;
@@ -13,7 +14,9 @@ export class Simulator {
   private mainLayer: Konva.Layer;
   private vectorsLayer: Konva.Layer;
 
-  constructor() {
+  constructor(system: ThreeBodySystem) {
+    this.threeBodySystem = system;
+
     this.stage = new Konva.Stage({
       container: 'canvas',
       width: 1000,
@@ -44,10 +47,6 @@ export class Simulator {
     this.stage.add(this.vectorsLayer);
 
     this.backgroundLayer.draw();
-  }
-
-  attachPlanets(planets: Planet[]) {
-    this.planets = planets;
   }
 
   clearPaths() {
@@ -82,7 +81,9 @@ export class Simulator {
     this.mainLayer.removeChildren();
     this.vectorsLayer.removeChildren();
 
-    this.planets.forEach(planet => {
+    const planets = this.threeBodySystem.getPlanets();
+
+    planets.forEach(planet => {
       const group = planet.getKonvaGroup();
       group.x(this.stage.getWidth() / 2);
       group.y(this.stage.getHeight() / 2);
@@ -91,7 +92,7 @@ export class Simulator {
     });
 
     // Trace paths
-    this.planets.filter(planet => planet.flags.showPath).forEach(planet => {
+    planets.filter(planet => planet.flags.showPath).forEach(planet => {
       const poop = planet.getKonvaPoop();
       poop.x(this.stage.getWidth() / 2);
       poop.y(this.stage.getHeight() / 2);
@@ -101,7 +102,7 @@ export class Simulator {
     });
 
     // Velocity vectors
-    this.planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
+    planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
       const vector = planet.getKonvaVelocityVector();
       vector.x(this.stage.getWidth() / 2);
       vector.y(this.stage.getHeight() / 2);
@@ -110,7 +111,7 @@ export class Simulator {
     });
 
     // Acceleration Vectors
-    this.planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
+    planets.filter(planet => planet.flags.showAcceleration).forEach(planet => {
       const vector = planet.getKonvaAccelerationVector();
       vector.x(this.stage.getWidth() / 2);
       vector.y(this.stage.getHeight() / 2);

@@ -4,9 +4,9 @@ import {
   PlanetConfig,
   PlanetInitialConditions,
   PlanetProperties,
-  Point,
-  Velocity,
 } from './Planet';
+import { Point, Velocity } from './Physics';
+import { ThreeBodySystem } from './ThreeBodySystem';
 import { planetConfigs } from './initialConfig';
 
 export type VisualizationFlags = {
@@ -15,23 +15,16 @@ export type VisualizationFlags = {
   showPath: boolean;
 };
 
-let planets: Planet[];
-const simulator = new Simulator();
+const system = new ThreeBodySystem(planetConfigs);
+const simulator = new Simulator(system);
 
-const initializeWorld = () => {
-  const configsCopy = JSON.parse(JSON.stringify(planetConfigs)) as PlanetConfig[];
-  planets = configsCopy.map(config => new Planet(config));
-  planets.forEach(planet => {
-    const others = planets.filter(other => other !== planet);
-    planet.updateAcceleration(others);
-  });
-
-  simulator.attachPlanets(planets);
+const initializeWorld = (configs: PlanetConfig[]) => {
+  system.reset(configs);
   simulator.clearPaths();
   simulator.draw();
 };
 
-initializeWorld();
+initializeWorld(planetConfigs);
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -41,12 +34,14 @@ import './styles.scss';
 interface ComponentState {
   playing: boolean;
   showAxis: boolean;
+  momentumNormalized: boolean;
 }
 
 class Controller extends React.Component<{}, ComponentState> {
   state = {
     playing: false,
     showAxis: true,
+    momentumNormalized: false,
   }
 
   mainLoop = () => {
@@ -58,26 +53,17 @@ class Controller extends React.Component<{}, ComponentState> {
   }
 
   updateFlags = (planetId: number, flags: VisualizationFlags) => {
-    planets[planetId].setFlags(flags);
+    system.updateFlags(planetId, flags);
     simulator.draw();
   }
 
   updatePlanetStates = () => {
-    planets.forEach(planet => {
-      const otherPlanets = planets.filter(otherPlanet => otherPlanet !== planet);
-      planet.update(otherPlanets);
-    });
+    system.step();
   }
 
   updatePlanetConfigs = (viewConfigs: PlanetConfig[]) => {
-    const configs = JSON.parse(JSON.stringify(viewConfigs)) as PlanetConfig[];
-    this.setState({ playing: false }, () => {
-      for (let i = 0; i < planets.length; ++i) {
-        planets[i].setInitialConditions(configs[i].initialConditions);
-        planets[i].setProperties(configs[i].properties);
-        planets[i].setFlags(configs[i].flags);
-      }
-      simulator.draw();
+    this.setState({ playing: false, momentumNormalized: false }, () => {
+      initializeWorld(viewConfigs);
     });
   }
 
@@ -94,9 +80,17 @@ class Controller extends React.Component<{}, ComponentState> {
     });
   }
 
+  toggleMomentumNormalization = (normalized: boolean) => {
+    this.setState({ momentumNormalized: normalized }, () => {
+      if (this.state.momentumNormalized) {
+        system.normalizeMomentum();
+      }
+    });
+  }
+
   resetPositions = () => {
-    this.setState({ playing: false }, () => {
-      initializeWorld();
+    this.setState({ playing: false, momentumNormalized: false }, () => {
+      initializeWorld(planetConfigs);
     });
   }
 
@@ -108,9 +102,11 @@ class Controller extends React.Component<{}, ComponentState> {
           updatePlanetConfigs={this.updatePlanetConfigs}
           toggleAxis={this.toggleAxis}
           togglePlayPause={this.togglePlayPause}
+          toggleMomentumNormalization={this.toggleMomentumNormalization}
           resetPositions={this.resetPositions}
           playing={this.state.playing}
           showAxis={this.state.showAxis}
+          momentumNormalized={this.state.momentumNormalized}
         />
       </div>
     );

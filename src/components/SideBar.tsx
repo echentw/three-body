@@ -11,10 +11,12 @@ interface SideBarComponentProps {
   updatePlanetConfigs: (configs: PlanetConfig[]) => void;
   toggleAxis: (showAxis: boolean) => void;
   togglePlayPause: (playing: boolean) => void;
+  toggleMomentumNormalization: (normalized: boolean) => void;
   resetPositions: () => void;
 
   playing: boolean;
   showAxis: boolean;
+  momentumNormalized: boolean;
 }
 
 interface SideBarComponentState {
@@ -145,9 +147,11 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
         <GlobalConfigComponent
           togglePlayPause={this.props.togglePlayPause}
           toggleAxis={this.props.toggleAxis}
+          toggleMomentumNormalization={this.props.toggleMomentumNormalization}
           resetPositions={this.props.resetPositions}
           showAxis={this.props.showAxis}
           playing={this.props.playing}
+          momentumNormalized={this.props.momentumNormalized}
         />
       </div>
     );
