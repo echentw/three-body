@@ -20,7 +20,7 @@ export class Simulator {
     this.stage = new Konva.Stage({
       container: 'canvas',
       width: 1000,
-      height: 700,
+      height: 800,
     });
     this.axis = new Axis(
       { width: this.stage.getWidth(), height: this.stage.getHeight() },

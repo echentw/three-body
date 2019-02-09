@@ -1,0 +1,16 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.planet-toggle-component {
+  display: flex;
+  flex-direction: row;
+}
+
+.flag-toggle {
+  display: flex;
+  flex-direction: row;
+}
+
+@import 'SideBar';

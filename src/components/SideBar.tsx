@@ -107,52 +107,57 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
 
   render() {
     return (
-      <div className="sidebar">
-        <PlanetConfigComponent
-          config={this.state.configs[0]}
-          onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(0, event)}
-          onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(0, event)}
-          onChangeVelocityX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityX(0, event)}
-          onChangeVelocityY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityY(0, event)}
-          onChangeMass={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeMass(0, event)}
-          onChangeRadius={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRadius(0, event)}
-          onChangeShowVelocity={(on: boolean) => this.onChangeShowVelocity(0, on)}
-          onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(0, on)}
-          onChangeShowPath={(on: boolean) => this.onChangeShowPath(0, on)}
-        />
-        <PlanetConfigComponent
-          config={this.state.configs[1]}
-          onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(1, event)}
-          onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(1, event)}
-          onChangeVelocityX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityX(1, event)}
-          onChangeVelocityY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityY(1, event)}
-          onChangeMass={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeMass(1, event)}
-          onChangeRadius={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRadius(1, event)}
-          onChangeShowVelocity={(on: boolean) => this.onChangeShowVelocity(1, on)}
-          onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(1, on)}
-          onChangeShowPath={(on: boolean) => this.onChangeShowPath(1, on)}
-        />
-        <PlanetConfigComponent
-          config={this.state.configs[2]}
-          onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(2, event)}
-          onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(2, event)}
-          onChangeVelocityX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityX(2, event)}
-          onChangeVelocityY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityY(2, event)}
-          onChangeMass={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeMass(2, event)}
-          onChangeRadius={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRadius(2, event)}
-          onChangeShowVelocity={(on: boolean) => this.onChangeShowVelocity(2, on)}
-          onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(2, on)}
-          onChangeShowPath={(on: boolean) => this.onChangeShowPath(2, on)}
-        />
-        <GlobalConfigComponent
-          togglePlayPause={this.props.togglePlayPause}
-          toggleAxis={this.props.toggleAxis}
-          toggleNormalization={this.props.toggleNormalization}
-          resetPositions={this.props.resetPositions}
-          showAxis={this.props.showAxis}
-          playing={this.props.playing}
-          normalized={this.props.normalized}
-        />
+      <div className="sidebar-container">
+        <div className="title-container">
+          Three Body System
+        </div>
+        <div className="sidebar-content-container">
+          <PlanetConfigComponent
+            config={this.state.configs[0]}
+            onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(0, event)}
+            onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(0, event)}
+            onChangeVelocityX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityX(0, event)}
+            onChangeVelocityY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityY(0, event)}
+            onChangeMass={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeMass(0, event)}
+            onChangeRadius={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRadius(0, event)}
+            onChangeShowVelocity={(on: boolean) => this.onChangeShowVelocity(0, on)}
+            onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(0, on)}
+            onChangeShowPath={(on: boolean) => this.onChangeShowPath(0, on)}
+          />
+          <PlanetConfigComponent
+            config={this.state.configs[1]}
+            onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(1, event)}
+            onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(1, event)}
+            onChangeVelocityX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityX(1, event)}
+            onChangeVelocityY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityY(1, event)}
+            onChangeMass={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeMass(1, event)}
+            onChangeRadius={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRadius(1, event)}
+            onChangeShowVelocity={(on: boolean) => this.onChangeShowVelocity(1, on)}
+            onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(1, on)}
+            onChangeShowPath={(on: boolean) => this.onChangeShowPath(1, on)}
+          />
+          <PlanetConfigComponent
+            config={this.state.configs[2]}
+            onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(2, event)}
+            onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(2, event)}
+            onChangeVelocityX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityX(2, event)}
+            onChangeVelocityY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeVelocityY(2, event)}
+            onChangeMass={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeMass(2, event)}
+            onChangeRadius={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRadius(2, event)}
+            onChangeShowVelocity={(on: boolean) => this.onChangeShowVelocity(2, on)}
+            onChangeShowAcceleration={(on: boolean) => this.onChangeShowAcceleration(2, on)}
+            onChangeShowPath={(on: boolean) => this.onChangeShowPath(2, on)}
+          />
+          <GlobalConfigComponent
+            togglePlayPause={this.props.togglePlayPause}
+            toggleAxis={this.props.toggleAxis}
+            toggleNormalization={this.props.toggleNormalization}
+            resetPositions={this.props.resetPositions}
+            showAxis={this.props.showAxis}
+            playing={this.props.playing}
+            normalized={this.props.normalized}
+          />
+        </div>
       </div>
     );
   }

@@ -29,7 +29,7 @@ initializeWorld(planetConfigs);
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { SideBarComponent } from './components/SideBar';
-import './styles.scss';
+import './styles/main.scss';
 
 interface ComponentState {
   playing: boolean;
@@ -97,24 +97,22 @@ class Controller extends React.Component<{}, ComponentState> {
 
   render() {
     return (
-      <div className="controller">
-        <SideBarComponent
-          updateFlags={this.updateFlags}
-          updatePlanetConfigs={this.updatePlanetConfigs}
-          toggleAxis={this.toggleAxis}
-          togglePlayPause={this.togglePlayPause}
-          toggleNormalization={this.toggleNormalization}
-          resetPositions={this.resetPositions}
-          playing={this.state.playing}
-          showAxis={this.state.showAxis}
-          normalized={this.state.normalized}
-        />
-      </div>
+      <SideBarComponent
+        updateFlags={this.updateFlags}
+        updatePlanetConfigs={this.updatePlanetConfigs}
+        toggleAxis={this.toggleAxis}
+        togglePlayPause={this.togglePlayPause}
+        toggleNormalization={this.toggleNormalization}
+        resetPositions={this.resetPositions}
+        playing={this.state.playing}
+        showAxis={this.state.showAxis}
+        normalized={this.state.normalized}
+      />
     );
   }
 }
 
 ReactDOM.render(
   <Controller/>,
-  document.getElementById("sidebar-container")
+  document.getElementById("sidebar-root")
 );

@@ -2,6 +2,9 @@ import * as React from 'react';
 
 import { CheckBox } from './CheckBox';
 import { PlanetConfig } from '../Planet';
+import { VectorInputComponent } from './VectorInputComponent';
+import { ScalarInputComponent } from './ScalarInputComponent';
+import { PlanetToggleComponent } from './PlanetToggleComponent';
 
 interface ComponentProps {
   config: PlanetConfig,
@@ -32,45 +35,45 @@ export class PlanetConfigComponent extends React.Component<ComponentProps> {
     } = this.props;
     return (
       <div className="planet-config-component">
-        <div className="initial-vector">
-          <div className="text">Initial Position:</div>
-          (
-          <input className="vector-input" type="text" defaultValue={String(initialConditions.position.x)} onChange={onChangePositionX}/>
-          ,
-          <input className="vector-input" type="text" defaultValue={String(initialConditions.position.y)} onChange={onChangePositionY}/>
-          )
-        </div>
-        <div className="initial-vector">
-          <div className="text">Initial Velocity:</div>
-          (
-          <input className="vector-input" type="text" defaultValue={String(initialConditions.velocity.x)} onChange={onChangeVelocityX}/>
-          ,
-          <input className="vector-input" type="text" defaultValue={String(initialConditions.velocity.y)} onChange={onChangeVelocityY}/>
-          )
-        </div>
-        <div className="scalar-container">
-          <div className="text">Mass:</div>
-          <input className="scalar-input" type="text" defaultValue={String(properties.mass)} onChange={onChangeMass}/>
-          kg
-        </div>
-        <div className="scalar-container">
-          <div className="text">Radius:</div>
-          <input className="scalar-input" type="text" defaultValue={String(properties.radius)} onChange={onChangeRadius}/>
-          m
-        </div>
-
-        <div className="flag-toggle">
-          <div className="text">Show Velocity</div>
-          <CheckBox onToggle={onChangeShowVelocity}/>
-        </div>
-        <div className="flag-toggle">
-          <div className="text">Show Acceleration</div>
-          <CheckBox onToggle={onChangeShowAcceleration}/>
-        </div>
-        <div className="flag-toggle">
-          <div className="text">Trace Path</div>
-          <CheckBox onToggle={onChangeShowPath}/>
-        </div>
+        <VectorInputComponent
+          label={"Initial Position"}
+          x={initialConditions.position.x}
+          y={initialConditions.position.y}
+          onChangeX={onChangePositionX}
+          onChangeY={onChangePositionY}
+        />
+        <VectorInputComponent
+          label={"Initial Velocity"}
+          x={initialConditions.velocity.x}
+          y={initialConditions.velocity.y}
+          onChangeX={onChangeVelocityX}
+          onChangeY={onChangeVelocityY}
+        />
+        <ScalarInputComponent
+          label={"Mass"}
+          value={properties.mass}
+          onChangeValue={onChangeMass}
+        />
+        <ScalarInputComponent
+          label={"Radius"}
+          value={properties.radius}
+          onChangeValue={onChangeRadius}
+        />
+        <PlanetToggleComponent
+          label={"Show Velocity"}
+          on={false}
+          onToggle={onChangeShowVelocity}
+        />
+        <PlanetToggleComponent
+          label={"Show Acceleration"}
+          on={false}
+          onToggle={onChangeShowAcceleration}
+        />
+        <PlanetToggleComponent
+          label={"Trace Path"}
+          on={false}
+          onToggle={onChangeShowPath}
+        />
       </div>
     );
   }

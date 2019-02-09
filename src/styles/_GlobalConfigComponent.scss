@@ -1,0 +1,22 @@
+@import 'utils';
+
+.sidebar-container {
+  .sidebar-content-container {
+    .global-config-container {
+      @extend %component-shared;
+
+      height: 100px;
+      background-color: pink;
+
+      .buttons-container {
+        display: flex;
+        flex-direction: row;
+
+        button {
+          margin: 10px;
+          width: 100px;
+        }
+      }
+    }
+  }
+}
