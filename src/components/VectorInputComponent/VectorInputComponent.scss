@@ -2,7 +2,25 @@
   display: flex;
   flex-direction: row;
 
+  .vector-label {
+    width: 104px;
+  }
+
+  .left-parenthesis {
+    margin-right: 2px;
+  }
+
+  .comma {
+    margin-right: 2px;
+  }
+
+  .right-parenthesis {
+    margin-left: 2px;
+  }
+
   .vector-input {
     width: 35px;
+    border: 1px solid black;
+    border-radius: 2px;
   }
 }

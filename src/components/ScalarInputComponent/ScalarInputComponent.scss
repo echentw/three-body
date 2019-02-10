@@ -1,8 +1,14 @@
-.scalar-input-container {
+.scalar-input-component {
   display: flex;
   flex-direction: row;
 
+  .scalar-label {
+    width: 50px;
+  }
+
   .scalar-input {
     width: 35px;
+    border: 1px solid black;
+    border-radius: 2px;
   }
 }

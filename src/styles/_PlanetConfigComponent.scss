@@ -4,6 +4,50 @@
       height: 190px;
       width: 100%;
       background-color: pink;
+
+      display: flex;
+      flex-direction: column;
+
+      .planet-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .inputs-container {
+        display: flex;
+        flex-direction: row;
+
+        .vector-inputs-container {
+          flex: 1;
+
+          .vector-input-container {
+            margin-bottom: 6px;
+          }
+        }
+
+        .scalar-inputs-container {
+          flex: 1;
+
+          .scalar-input-container {
+            margin-bottom: 6px;
+          }
+        }
+      }
+
+      .planet-toggles-container {
+        flex: 1;
+
+        display: flex;
+        flex-direction: row;
+
+        .planet-toggle-container {
+          flex: 1;
+
+          display: flex;
+          flex-direction: column;
+        }
+      }
     }
   }
 }

@@ -1,0 +1,18 @@
+.planet-toggle-component {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  .planet-toggle-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .checkbox-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

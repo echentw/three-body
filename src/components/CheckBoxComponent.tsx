@@ -13,7 +13,7 @@ export class CheckBoxComponent extends React.Component<ComponentProps> {
   render() {
     const { checked, onToggle } = this.props;
     return (
-      <div className="checkbox">
+      <div className="checkbox-component">
         <label>
           <input
             type="checkbox"

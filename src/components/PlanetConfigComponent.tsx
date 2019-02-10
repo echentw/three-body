@@ -6,7 +6,8 @@ import { ScalarInputComponent } from './ScalarInputComponent/ScalarInputComponen
 import { PlanetToggleComponent } from './PlanetToggleComponent/PlanetToggleComponent';
 
 interface ComponentProps {
-  config: PlanetConfig,
+  label: string;
+  config: PlanetConfig;
   onChangePositionX: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePositionY: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeVelocityX: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,6 +23,7 @@ export class PlanetConfigComponent extends React.Component<ComponentProps> {
   render() {
     const { properties, initialConditions, flags } = this.props.config;
     const {
+      label,
       onChangePositionX,
       onChangePositionY,
       onChangeVelocityX,
@@ -34,45 +36,70 @@ export class PlanetConfigComponent extends React.Component<ComponentProps> {
     } = this.props;
     return (
       <div className="planet-config-component">
-        <VectorInputComponent
-          label={"Initial Position"}
-          x={initialConditions.position.x}
-          y={initialConditions.position.y}
-          onChangeX={onChangePositionX}
-          onChangeY={onChangePositionY}
-        />
-        <VectorInputComponent
-          label={"Initial Velocity"}
-          x={initialConditions.velocity.x}
-          y={initialConditions.velocity.y}
-          onChangeX={onChangeVelocityX}
-          onChangeY={onChangeVelocityY}
-        />
-        <ScalarInputComponent
-          label={"Mass"}
-          value={properties.mass}
-          onChangeValue={onChangeMass}
-        />
-        <ScalarInputComponent
-          label={"Radius"}
-          value={properties.radius}
-          onChangeValue={onChangeRadius}
-        />
-        <PlanetToggleComponent
-          label={"Show Velocity"}
-          on={false}
-          onToggle={onChangeShowVelocity}
-        />
-        <PlanetToggleComponent
-          label={"Show Acceleration"}
-          on={false}
-          onToggle={onChangeShowAcceleration}
-        />
-        <PlanetToggleComponent
-          label={"Trace Path"}
-          on={false}
-          onToggle={onChangeShowPath}
-        />
+        <div className="planet-name">
+          {label}
+        </div>
+        <div className="inputs-container">
+          <div className="vector-inputs-container">
+            <div className="vector-input-container">
+              <VectorInputComponent
+                label={"Initial Position"}
+                x={initialConditions.position.x}
+                y={initialConditions.position.y}
+                onChangeX={onChangePositionX}
+                onChangeY={onChangePositionY}
+              />
+            </div>
+            <div className="vector-input-container">
+              <VectorInputComponent
+                label={"Initial Velocity"}
+                x={initialConditions.velocity.x}
+                y={initialConditions.velocity.y}
+                onChangeX={onChangeVelocityX}
+                onChangeY={onChangeVelocityY}
+              />
+            </div>
+          </div>
+          <div className="scalar-inputs-container">
+            <div className="scalar-input-container">
+              <ScalarInputComponent
+                label={"Mass"}
+                value={properties.mass}
+                onChangeValue={onChangeMass}
+              />
+            </div>
+            <div className="scalar-input-container">
+              <ScalarInputComponent
+                label={"Radius"}
+                value={properties.radius}
+                onChangeValue={onChangeRadius}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="planet-toggles-container">
+          <div className="planet-toggle-container">
+            <PlanetToggleComponent
+              label={"Show Velocity"}
+              on={false}
+              onToggle={onChangeShowVelocity}
+            />
+          </div>
+          <div className="planet-toggle-container">
+            <PlanetToggleComponent
+              label={"Show Acceleration"}
+              on={false}
+              onToggle={onChangeShowAcceleration}
+            />
+          </div>
+          <div className="planet-toggle-container">
+            <PlanetToggleComponent
+              label={"Trace Path"}
+              on={false}
+              onToggle={onChangeShowPath}
+            />
+          </div>
+        </div>
       </div>
     );
   }
