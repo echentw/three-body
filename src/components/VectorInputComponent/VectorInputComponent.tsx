@@ -15,12 +15,12 @@ export class VectorInputComponent extends React.Component<ComponentProps> {
     const { label, x, y, onChangeX, onChangeY } = this.props;
     return (
       <div className="vector-input-component">
-        <div className="vector-label">{label}:</div>
-        <div className="left-parenthesis">(</div>
+        <div className="vector-label text">{label}:</div>
+        <div className="left-parenthesis text">(</div>
         <input className="vector-input" type="text" defaultValue={String(x)} onChange={onChangeX}/>
-        <div className="comma">,</div>
+        <div className="comma text">,</div>
         <input className="vector-input" type="text" defaultValue={String(y)} onChange={onChangeY}/>
-        <div className="right-parenthesis">)</div>
+        <div className="right-parenthesis text">)</div>
       </div>
     );
   }

@@ -108,7 +108,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
   render() {
     return (
       <div className="sidebar-container">
-        <div className="title-container">
+        <div className="title-container text">
           Three Body System
         </div>
         <div className="sidebar-content-container">

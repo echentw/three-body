@@ -13,7 +13,7 @@ export class ScalarInputComponent extends React.Component<ComponentProps> {
     const { label, value, onChangeValue } = this.props;
     return (
       <div className="scalar-input-component">
-        <div className="scalar-label">{label}:</div>
+        <div className="scalar-label text">{label}:</div>
         <input className="scalar-input" type="text" defaultValue={String(value)} onChange={onChangeValue}/>
       </div>
     );

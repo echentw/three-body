@@ -3,19 +3,23 @@
   flex-direction: row;
 
   .vector-label {
-    width: 104px;
+    width: 114px;
+    font-size: 16px;
   }
 
   .left-parenthesis {
     margin-right: 2px;
+    font-size: 14px;
   }
 
   .comma {
     margin-right: 2px;
+    font-size: 14px;
   }
 
   .right-parenthesis {
     margin-left: 2px;
+    font-size: 14px;
   }
 
   .vector-input {

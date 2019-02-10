@@ -36,7 +36,7 @@ export class PlanetConfigComponent extends React.Component<ComponentProps> {
     } = this.props;
     return (
       <div className="planet-config-component">
-        <div className="planet-name">
+        <div className="planet-name text">
           {label}
         </div>
         <div className="inputs-container">

@@ -15,7 +15,7 @@ export class PlanetToggleComponent extends React.Component<ComponentProps> {
     const { label, on, onToggle } = this.props;
     return (
       <div className="planet-toggle-component">
-        <div className="planet-toggle-label">{label}</div>
+        <div className="planet-toggle-label text">{label}</div>
         <CheckBoxComponent
           checked={on}
           onToggle={onToggle}
