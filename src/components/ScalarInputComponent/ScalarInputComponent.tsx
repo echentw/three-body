@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './ScalarInputComponent.scss';
+
 interface ComponentProps {
   label: string;
   value: number;

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './VectorInputComponent.scss';
+
 interface ComponentProps {
   label: string;
   x: number;

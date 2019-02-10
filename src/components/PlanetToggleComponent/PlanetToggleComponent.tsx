@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CheckBox } from './CheckBox';
+import { CheckBoxComponent } from '../CheckBoxComponent';
 
 interface ComponentProps {
   label: string;
@@ -14,7 +14,10 @@ export class PlanetToggleComponent extends React.Component<ComponentProps> {
     return (
       <div className="planet-toggle-component">
         <div className="text">{label}</div>
-        <CheckBox onToggle={onToggle}/>
+        <CheckBoxComponent
+          checked={on}
+          onToggle={onToggle}
+        />
       </div>
     );
   }

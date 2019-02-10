@@ -4,24 +4,6 @@
       height: 190px;
       width: 100%;
       background-color: pink;
-
-      .vector-input-component {
-        display: flex;
-        flex-direction: row;
-
-        .vector-input {
-          width: 35px;
-        }
-      }
-
-      .scalar-input-container {
-        display: flex;
-        flex-direction: row;
-
-        .scalar-input {
-          width: 35px;
-        }
-      }
     }
   }
 }

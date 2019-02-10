@@ -28,7 +28,7 @@ initializeWorld(planetConfigs);
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { SideBarComponent } from './components/SideBar';
+import { SideBarComponent } from './components/SideBarComponent';
 import './styles/main.scss';
 
 interface ComponentState {
@@ -40,7 +40,7 @@ interface ComponentState {
 class Controller extends React.Component<{}, ComponentState> {
   state = {
     playing: false,
-    showAxis: true,
+    showAxis: false,
     normalized: false,
   }
 

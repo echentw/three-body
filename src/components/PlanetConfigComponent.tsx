@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-import { CheckBox } from './CheckBox';
 import { PlanetConfig } from '../Planet';
-import { VectorInputComponent } from './VectorInputComponent';
-import { ScalarInputComponent } from './ScalarInputComponent';
-import { PlanetToggleComponent } from './PlanetToggleComponent';
+import { VectorInputComponent } from './VectorInputComponent/VectorInputComponent';
+import { ScalarInputComponent } from './ScalarInputComponent/ScalarInputComponent';
+import { PlanetToggleComponent } from './PlanetToggleComponent/PlanetToggleComponent';
 
 interface ComponentProps {
   config: PlanetConfig,

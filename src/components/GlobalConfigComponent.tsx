@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CheckBox } from './CheckBox';
+import { CheckBoxComponent } from './CheckBoxComponent';
 
 interface ComponentProps {
   togglePlayPause: (play: boolean) => void;
@@ -19,7 +19,10 @@ export class GlobalConfigComponent extends React.Component<ComponentProps> {
       <div className="global-config-container">
         <div className="flag-toggle">
           <div className="text">Show Axis</div>
-          <CheckBox onToggle={this.props.toggleAxis}/>
+          <CheckBoxComponent
+            checked={this.props.showAxis}
+            onToggle={this.props.toggleAxis}
+          />
         </div>
         <div className="buttons-container">
           <button onClick={() => this.props.togglePlayPause(!this.props.playing)}>
