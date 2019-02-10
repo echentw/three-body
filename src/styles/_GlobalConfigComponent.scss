@@ -1,22 +1,41 @@
 @import 'utils';
 
-.sidebar-container {
-  .sidebar-content-container {
-    .global-config-container {
-      @extend %component-shared;
+.global-config-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-      height: 100px;
-      background-color: pink;
+  height: 110px;
+  width: 350px;
 
-      .buttons-container {
-        display: flex;
-        flex-direction: row;
+  .global-flags-container {
+    margin-bottom: 10px;
 
-        button {
-          margin: 10px;
-          width: 100px;
-        }
+    .global-flag-container {
+      display: flex;
+      flex-direction: row;
+
+      margin-bottom: 4px;
+
+      .checkbox-component {
+        margin-right: 8px;
       }
+    }
+  }
+
+  .global-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+      font-size: 16px;
+      font-family: Open Sans;
+
+      height: 30px;
+      width: 150px;
+
+      background-color: rgb(180, 210, 250);
     }
   }
 }

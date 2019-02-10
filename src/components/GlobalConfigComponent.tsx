@@ -16,28 +16,29 @@ interface ComponentProps {
 export class GlobalConfigComponent extends React.Component<ComponentProps> {
   render() {
     return (
-      <div className="global-config-container">
-        <div className="flag-toggle">
-          <div className="text">Show Axis</div>
-          <CheckBoxComponent
-            checked={this.props.showAxis}
-            onToggle={this.props.toggleAxis}
-          />
+      <div className="global-config-component">
+        <div className="global-flags-container">
+          <div className="global-flag-container">
+            <CheckBoxComponent
+              checked={this.props.showAxis}
+              onToggle={this.props.toggleAxis}
+            />
+            <div className="global-flag-label text">Show Axis</div>
+          </div>
+          <div className="global-flag-container">
+            <CheckBoxComponent
+              checked={this.props.normalized}
+              onToggle={() => this.props.toggleNormalization(true)}
+            />
+            <div className="global-flag-label text">Normalize Momentum and Barycenter</div>
+          </div>
         </div>
-        <div className="buttons-container">
+        <div className="global-buttons-container">
           <button onClick={() => this.props.togglePlayPause(!this.props.playing)}>
             { this.props.playing ? 'Pause' : 'Start' }
           </button>
-          <button onClick={this.props.resetPositions}>
+          <button className="text" onClick={this.props.resetPositions}>
             Reset Positions
-          </button>
-        </div>
-        <div className="normalize-container">
-          <button
-            onClick={() => this.props.toggleNormalization(true)}
-            disabled={this.props.normalized}
-          >
-            { this.props.normalized ? 'Normalized!' : 'Normalize Momentum and Barycenter' }
           </button>
         </div>
       </div>
