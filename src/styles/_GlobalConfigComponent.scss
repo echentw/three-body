@@ -6,7 +6,7 @@
   justify-content: center;
 
   height: 110px;
-  width: 350px;
+  width: 324px;
 
   .global-flags-container {
     margin-bottom: 10px;
@@ -25,13 +25,23 @@
     justify-content: space-between;
 
     button {
+      border: none;
+      outline: none;
+
+      color: white;
       font-size: 16px;
       font-family: Open Sans;
 
       height: 30px;
       width: 150px;
 
-      background-color: rgb(180, 210, 250);
+      background-color: rgb(100, 100, 250);
+      &:hover {
+        background-color: rgb(80, 80, 250);
+      }
+      &:active {
+        background-color: rgb(0, 0, 250);
+      }
     }
   }
 }

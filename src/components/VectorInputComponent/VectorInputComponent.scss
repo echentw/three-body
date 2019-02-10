@@ -8,17 +8,18 @@
   }
 
   .left-parenthesis {
-    margin-right: 2px;
+    margin-right: 4px;
     font-size: 14px;
   }
 
   .comma {
-    margin-right: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
     font-size: 14px;
   }
 
   .right-parenthesis {
-    margin-left: 2px;
+    margin-left: 4px;
     font-size: 14px;
   }
 
@@ -26,5 +27,9 @@
     width: 35px;
     border: 1px solid black;
     border-radius: 2px;
+
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
   }
 }
