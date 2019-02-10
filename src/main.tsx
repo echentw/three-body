@@ -22,7 +22,7 @@ simulator.toggleAxis(true); // show axis
 const initializeWorld = (configs: PlanetConfig[]) => {
   system.reset(configs);
   simulator.clearPaths();
-  simulator.draw();
+  simulator.draw({ poop: false });
 };
 
 initializeWorld(planetConfigs);
@@ -48,14 +48,14 @@ class Controller extends React.Component<{}, ComponentState> {
   mainLoop = () => {
     if (this.state.playing) {
       this.updatePlanetStates();
-      simulator.draw();
+      simulator.draw({ poop: true });
       requestAnimationFrame(this.mainLoop);
     }
   }
 
   updateFlags = (planetId: number, flags: VisualizationFlags) => {
     system.updateFlags(planetId, flags);
-    simulator.draw();
+    simulator.draw({ poop: false });
   }
 
   updatePlanetStates = () => {
@@ -85,7 +85,7 @@ class Controller extends React.Component<{}, ComponentState> {
     this.setState({ normalized }, () => {
       if (this.state.normalized) {
         system.normalize();
-        simulator.draw();
+        simulator.draw({ poop: false });
       }
     });
   }

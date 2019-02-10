@@ -38,7 +38,7 @@ export class GlobalConfigComponent extends React.Component<ComponentProps> {
             { this.props.playing ? 'Pause' : 'Start' }
           </button>
           <button className="text" onClick={this.props.resetPositions}>
-            Reset Positions
+            Reset
           </button>
         </div>
       </div>

@@ -76,7 +76,7 @@ export class Simulator {
     }
   }
 
-  draw() {
+  draw({ poop }: { poop: boolean }) {
     // Clear the canvas
     this.mainLayer.removeChildren();
     this.vectorsLayer.removeChildren();
@@ -92,14 +92,16 @@ export class Simulator {
     });
 
     // Trace paths
-    planets.filter(planet => planet.flags.showPath).forEach(planet => {
-      const poop = planet.getKonvaPoop();
-      poop.x(this.stage.getWidth() / 2);
-      poop.y(this.stage.getHeight() / 2);
-      poop.scaleY(-1);
-      this.pathsLayer.add(poop);
-      poop.draw();
-    });
+    if (poop) {
+      planets.filter(planet => planet.flags.showPath).forEach(planet => {
+        const poop = planet.getKonvaPoop();
+        poop.x(this.stage.getWidth() / 2);
+        poop.y(this.stage.getHeight() / 2);
+        poop.scaleY(-1);
+        this.pathsLayer.add(poop);
+        poop.draw();
+      });
+    }
 
     // Velocity vectors
     planets.filter(planet => planet.flags.showVelocity).forEach(planet => {
