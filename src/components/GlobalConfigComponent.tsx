@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CheckBoxComponent } from './CheckBoxComponent';
+import { CheckBoxComponent } from './CheckBoxComponent/CheckBoxComponent';
 
 interface ComponentProps {
   togglePlayPause: (play: boolean) => void;

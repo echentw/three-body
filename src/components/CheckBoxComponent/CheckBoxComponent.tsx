@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './CheckBoxComponent.scss';
+
 interface ComponentProps {
   checked: boolean;
   onToggle: (checked: boolean) => void;
@@ -11,15 +13,16 @@ export class CheckBoxComponent extends React.Component<ComponentProps> {
   }
 
   render() {
-    const { checked, onToggle } = this.props;
+    const { checked } = this.props;
     return (
       <div className="checkbox-component">
-        <label>
+        <label className="container">
           <input
             type="checkbox"
             checked={checked}
             onChange={this.onToggle}
           />
+          <span className="checkmark"></span>
         </label>
       </div>
     );

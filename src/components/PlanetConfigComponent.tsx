@@ -81,21 +81,21 @@ export class PlanetConfigComponent extends React.Component<ComponentProps> {
           <div className="planet-toggle-container">
             <PlanetToggleComponent
               label={"Show Velocity"}
-              on={false}
+              on={flags.showVelocity}
               onToggle={onChangeShowVelocity}
             />
           </div>
           <div className="planet-toggle-container">
             <PlanetToggleComponent
               label={"Show Acceleration"}
-              on={false}
+              on={flags.showAcceleration}
               onToggle={onChangeShowAcceleration}
             />
           </div>
           <div className="planet-toggle-container">
             <PlanetToggleComponent
               label={"Trace Path"}
-              on={false}
+              on={flags.showPath}
               onToggle={onChangeShowPath}
             />
           </div>
