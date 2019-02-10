@@ -17,6 +17,7 @@ export type VisualizationFlags = {
 
 const system = new ThreeBodySystem(planetConfigs);
 const simulator = new Simulator(system);
+simulator.toggleAxis(true); // show axis
 
 const initializeWorld = (configs: PlanetConfig[]) => {
   system.reset(configs);
@@ -40,7 +41,7 @@ interface ComponentState {
 class Controller extends React.Component<{}, ComponentState> {
   state = {
     playing: false,
-    showAxis: false,
+    showAxis: true,
     normalized: false,
   }
 
