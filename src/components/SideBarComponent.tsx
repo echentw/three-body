@@ -139,7 +139,7 @@ export class SideBarComponent extends React.Component<SideBarComponentProps, Sid
             onChangeShowPath={(on: boolean) => this.onChangeShowPath(1, on)}
           />
           <PlanetConfigComponent
-            label={"Planet Yellow"}
+            label={"Planet Green"}
             config={this.state.configs[2]}
             onChangePositionX={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionX(2, event)}
             onChangePositionY={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangePositionY(2, event)}

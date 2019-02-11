@@ -15,6 +15,7 @@ export const planetConfigs: PlanetConfig[] = [
     properties: {
       radius: 10.0,
       mass: 1.0,
+      color: 'red',
     },
     flags: {
       showVelocity: false,
@@ -35,6 +36,7 @@ export const planetConfigs: PlanetConfig[] = [
     properties: {
       radius: 20.0,
       mass: 10.0,
+      color: 'blue',
     },
     flags: {
       showVelocity: false,
@@ -55,6 +57,7 @@ export const planetConfigs: PlanetConfig[] = [
     properties: {
       radius: 20.0,
       mass: 10.0,
+      color: 'green',
     },
     flags: {
       showVelocity: false,

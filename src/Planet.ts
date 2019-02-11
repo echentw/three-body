@@ -10,6 +10,7 @@ import {
 export type PlanetProperties = {
   radius: number,
   mass: number,
+  color: string;
 }
 
 export type PlanetInitialConditions = {
@@ -26,17 +27,23 @@ export type PlanetConfig = {
 export class Planet {
   public radius: number;
   public mass: number;
+  public color: string;
+
   public position: Point;
   public velocity: Velocity;
   public acceleration: Acceleration;
+
   public flags: VisualizationFlags;
 
   constructor(config: PlanetConfig) {
-    this.position = config.initialConditions.position;
-    this.velocity = config.initialConditions.velocity;
     this.radius = config.properties.radius;
     this.mass = config.properties.mass;
+    this.color = config.properties.color;
+
+    this.position = config.initialConditions.position;
+    this.velocity = config.initialConditions.velocity;
     this.acceleration = { x: 0, y: 0 };
+
     this.flags = config.flags;
   }
 
@@ -87,7 +94,7 @@ export class Planet {
       x: this.position.x,
       y: this.position.y,
       radius: 1,
-      fill: 'grey',
+      fill: this.color,
     }));
     return group;
   }
@@ -115,8 +122,8 @@ export class Planet {
       points: [0, 0, this.acceleration.x * 4, this.acceleration.y * 4],
       pointerLength: 8,
       pointerWidth : 6,
-      fill: 'blue',
-      stroke: 'blue',
+      fill: 'rgb(200, 200, 0)',
+      stroke: 'rgb(200, 200, 0)',
       strokeWidth: 2,
     }));
     return group;
@@ -125,7 +132,7 @@ export class Planet {
   getKonvaGroup(): Konva.Group {
     const group = new Konva.Group();
     group.add(new Konva.Circle({
-      fill: 'green',
+      fill: this.color,
       radius: this.radius,
       x: this.position.x,
       y: this.position.y,
