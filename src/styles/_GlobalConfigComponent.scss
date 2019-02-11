@@ -37,12 +37,12 @@
       height: 30px;
       width: 150px;
 
-      background-color: rgb(100, 100, 250);
+      background-color: $sidebar-button-color;
       &:hover {
-        background-color: rgb(80, 80, 250);
+        background-color: $sidebar-button-hover-color;
       }
       &:active {
-        background-color: rgb(0, 0, 250);
+        background-color: $sidebar-button-active-color;
       }
     }
   }

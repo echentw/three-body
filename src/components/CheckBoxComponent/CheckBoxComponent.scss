@@ -1,3 +1,5 @@
+@import '../../styles/utils';
+
 .checkbox-component {
   input {
     opacity: 0;
@@ -42,12 +44,12 @@
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: rgb(230, 230, 230);
+  background-color: $sidebar-checkbox-hover-color;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: rgb(100, 100, 250);
+  background-color: $sidebar-checkbox-checked-color;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

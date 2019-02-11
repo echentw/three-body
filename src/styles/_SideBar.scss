@@ -4,7 +4,7 @@
 @import 'GlobalConfigComponent';
 
 .sidebar-container {
-  @extend %component-shared;
+  @extend %border-box;
 
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   width: 450px;
 
   padding: 8px;
-  background-color: rgb(200, 200, 200);
+  background-color: $sidebar-background-color;
 
   .title-container {
     font-size: 28px;
