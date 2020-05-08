@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --port 9000 --inline --progress --profile --colors --watch --content-base src/ --mode development",
+    "start": "webpack --config webpack.config.js --watch",
     "build": "webpack --config webpack.config.js --mode production",
     "build.prod": "webpack --config webpack.config.js -p"
   },
