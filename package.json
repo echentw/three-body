@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/node": "7.0.0",
     "awesome-typescript-loader": "5.2.0",
-    "source-map-loader": "0.2.3",
+    "source-map-loader": "0.2.4",
     "tslint": "5.10.0",
     "tslint-loader": "3.6.0",
     "typescript": "2.8.3",
